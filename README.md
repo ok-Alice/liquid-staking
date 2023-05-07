@@ -1,99 +1,43 @@
-# Swanky dev container
+# Delegator Smart Contract
 
-## Intro
+The delegator smart contract is our showcase for executing other smart contracts on-chain.
 
-Dev container is a Visual Studio Code extension that allows for sharing a full dev environment.
+It consists in total of 4 different smart contract:
 
-This means you can develop your project inside a preconfigured container with all prerequisites met and correct dependencies installed. This includes Rust compiler, `cargo contract` and `swanky-cli`.
+- Delegator (root): Delegates calls either to the Adder or Subber smart contract
+- Adder: Increases a value in the Accumulator smart contract
+- Subber: Decreases a value in the Accumulator smart contract
+- Accumulator: Owns a simple `i32` value that can be incremented or decremented
 
-## Prerequisites
+In order to test this bundle of smart contracts you need to execute the
+following steps.
 
-To run the container, you will need:
+You can upload the contracts using our [Contracts UI](https://contracts-ui.substrate.io/).
+If you want to test it locally, our [`substrate-contracts-node`](https://use.ink/getting-started/setup/#installing-the-substrate-smart-contracts-node)
+is an easy way to get a local smart contract chain running.
 
-- Visual Studio Code with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) enabled
-- Docker engine installed and the daemon running
+1. Compile all contracts using the `./build-all.sh` script.
+   You will receive the respective `.contract` bundles for all the smart contracts in the `target/ink/` folder:
+   - `target/ink/delegator.contract`
+   - `target/ink/adder/adder.contract`
+   - `target/ink/subber/subber.contract`
+   - `target/ink/accumulator/accumulator.contract`
+1. Upload the `.contract` bundle of Accumulator, Adder and Subber to the chain.
+1. Note down the respective code hashes of the uploaded contracts. You can
+   copy the contract hashes [from the page of uploaded contracts](https://contracts-ui.substrate.io/):<br/>
+   [<img src="./.images/code-hashes.png" width="600" alt="Code Hashes Overview" />](https://contracts-ui.substrate.io/)
+1. Instantiate the Delegator smart contract given all of the code hashes and a starting value.
+   Make sure the endowment is big enough (if you're using our `substrate-contracts-node` it's `1000000`).
+   The Delegator smart contract will take over the work of instantiating the other smart contracts for you.
+1. Now you are able to run the operations provided by the Delegator smart contract.
+   Namely `delegate` to delegate the call to either the Adder or the Subber to either increase or decrease
+   the value stored in the Accumulator smart contract respectively and `switch` to switch the currently
+   delegated-to smart contract.
+   The initial delegated-to smart contract is the Adder.
 
-More detailed information on system requirements can be [found here](https://code.visualstudio.com/docs/devcontainers/containers#_system-requirements).
+   <br/>
 
-## Software versions
-
-Swanky dev container comes with `cargo contract` v2 and `swanky-cli` v2 installed, supporting and optimized for ink! v4 and above. If you need an older version, please refer to the [environmet setup docs](https://docs.astar.network/docs/build/environment/ink_environment#ink-cli) and [`swanky-cli` update guide](#updating-swanky-version)
-
-## Usage
-
-- This is a template repo, create a new repo from this template, or clone it
-- open the repo in VS Code
-
-There should be a popup in the lower-right offering you to open the container. Click "Reopen in Container".
-
-<p align="center">
-<img src="https://github.com/AstarNetwork/swanky-dev-container/blob/main/images/popup.png" width=300/>
-</p>
-
-You can also click on the green button on the lower-left to open the dev container commands menu, and select "Reopen in container" from there.
-
-<p align="center">
-<img src="https://github.com/AstarNetwork/swanky-dev-container/blob/main/images/button.png" width=300/>
-</p>
-<p align="center">
-<img src="https://github.com/AstarNetwork/swanky-dev-container/blob/main/images/menu.png" width=300/>
-</p>
-
-First run will take a while as it needs to build the container and install all the packages and dependencies.
-
-### Host shared folder
-
-As a part of the installation process, a folder named `swanky` will be created in your `HOME`.
-
-It is mounted to `/host-home` in the container, and you can use it to share files with the host OS, for example, compiled contracts for uploading and instantiating on the contracts UI.
-
-### Terminal
-
-To interact with your project (including calling `swanky` commands), use VS Code integrated terminal.
-
-## Updating swanky version
-
-Swanky is installed into `/opt/swanky`, and the main executable is linked to `/usr/local/bin/swanky`.
-
-To update the Swanky version you can use the following steps:
-
-```bash
-sudo rm -rf /opt/swanky /usr/local/bin/swanky
-wget -O /tmp/swanky.tar.gz [new_version_url]
-sudo tar -xf /tmp/swanky.tar.gz -C /opt
-sudo ln -s /opt/swanky/bin/swanky /usr/local/bin/swanky
-```
-
-## Configure and modify the container
-
-### Adding apt packages
-
-This dev container uses `apt-packages` feature. You can add the packages you need to the `packages` fields, and they will be installed during the container build.
-
-Note that you will have to rebuild for changes to take place.
-
-### Git credentials
-
-Only `user.name` and `user.email` are copied from the host system because those are needed for swanky-cli to operate correctly. Anything else needs to be added manually.
-
-### Adding vscode extensions
-
-Any VS code extensions you need to run during the development in the container need to be specified in the `devcontainer.json` file.
-
-To add the extensions you want, copy the identifier found in the extension details page into the `customizations.vscode.extensions` array in `devcontainer.json`
-
-### Add features
-
-Features are "modules" that can be added to the dev container to install additional software or extend the functionality.
-
-Officially supported and community maintained features can be [found here](https://containers.dev/features), but you can also build your own.
-
-To add a feature, simply copy it's reference into the `features` field.
-
-> Note: not all features are compatible, and some need to be installed in a specific order. Check the readme before adding any.
-
-## References
-
-- [Dev containers manual](https://code.visualstudio.com/docs/devcontainers/containers)
-- [Dev container specification](https://containers.dev/)
-- [swanky-cli](https://github.com/AstarNetwork/swanky-cli)
+   > **Note:**<br/>
+   > Depending on your Substrate version you might encounter [a bug with the pre-filled gas estimation of the UI](https://github.com/paritytech/substrate/issues/8693)
+   > and get the error `ExtrinsicFailed: OutOfGas`.
+   > As a workaround set the maximum allowed gas manually (e.g. to 5000).

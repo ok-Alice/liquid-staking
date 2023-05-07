@@ -5,9 +5,9 @@
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": { "dockerfile": "Dockerfile" },
 
-  // Mount the workspace volume
-  "workspaceMount": "source=swanky-workspace-volume,target=/workspace,type=volume",
-  "workspaceFolder": "/workspace",
+  // // Mount the workspace volume
+  // "workspaceMount": "source=swanky-workspace-volume,target=/workspace,type=volume",
+  // "workspaceFolder": "/workspace",
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
@@ -23,7 +23,7 @@
   "initializeCommand": ".devcontainer/scripts/create-swanky-shared.sh ${localEnv:HOME}${localEnv:USERPROFILE}/swanky",
 
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/swanky,target=/host-home,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
