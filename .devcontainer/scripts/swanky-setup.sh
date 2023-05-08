@@ -10,6 +10,10 @@ git config --global "user.email" $git_email
 echo "[net]" > $CARGO_HOME/config.toml
 echo "git-fetch-with-cli = true" >> $CARGO_HOME/config.toml
 
+# Temporary fix for "rustup update failing with could not rename component file"
+rustup uninstall nightly-2023-02-07-x86_64-unknown-linux-gnu
+rustup install nightly-2023-02-07-x86_64-unknown-linux-gnu
+
 rustup default stable
 rustup update
 rustup update nightly
@@ -19,7 +23,7 @@ rustup target add wasm32-unknown-unknown --toolchain nightly
 rustup default nightly
 
 cargo install cargo-dylint dylint-link
-cargo install cargo-contract --force --version 2.1.0
+cargo install cargo-contract --force --version 1.5.1
 
 swanky_folder="/opt/swanky"
 
