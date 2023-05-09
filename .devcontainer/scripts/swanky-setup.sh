@@ -10,10 +10,6 @@ git config --global "user.email" $git_email
 echo "[net]" > $CARGO_HOME/config.toml
 echo "git-fetch-with-cli = true" >> $CARGO_HOME/config.toml
 
-# Temporary fix for "rustup update failing with could not rename component file"
-rustup uninstall nightly-2023-02-07-x86_64-unknown-linux-gnu
-rustup install nightly-2023-02-07-x86_64-unknown-linux-gnu
-
 rustup default stable
 rustup update
 rustup update nightly
@@ -25,11 +21,15 @@ rustup default nightly
 cargo install cargo-dylint dylint-link
 cargo install cargo-contract --force --locked
 
+rustup component add rust-src --toolchain stable-x86_64-unknown-linux-gnu
+
 swanky_folder="/opt/swanky"
 
 if [ ! -d "$swanky_folder" ]; then
-  wget -O /tmp/swanky.tar.gz https://github.com/AstarNetwork/swanky-cli/releases/download/v2.1.1/swanky-v2.1.1-32e0874-linux-x64.tar.gz && sudo tar -xf /tmp/swanky.tar.gz -C /opt
+  sudo mkdir -p "$swanky_folder"
 fi
+
+wget -O /tmp/swanky.tar.gz https://github.com/AstarNetwork/swanky-cli/releases/download/v2.1.1/swanky-v2.1.1-32e0874-linux-x64.tar.gz && sudo tar -xf /tmp/swanky.tar.gz -C /opt
 
 link_path="/usr/local/bin/swanky"
 swanky_bin_path="/opt/swanky/bin/swanky"
@@ -46,3 +46,6 @@ if ! npm list -g | grep -q "serve"; then
 else
   echo "serve is already installed globally"
 fi
+
+sudo apt install jq
+sudo apt reinstall libc-bin
