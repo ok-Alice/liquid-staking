@@ -1,8 +1,8 @@
 set -x
 
-cargo contract upload --manifest-path=contracts/accumulator/Cargo.toml --suri //Alice
-cargo contract upload --manifest-path=contracts/adder/Cargo.toml --suri //Alice
-cargo contract upload --manifest-path=contracts/subber/Cargo.toml --suri //Alice
+cargo contract upload --manifest-path=contracts/accumulator/Cargo.toml -x --suri //Alice
+cargo contract upload --manifest-path=contracts/adder/Cargo.toml -x --suri //Alice
+cargo contract upload --manifest-path=contracts/subber/Cargo.toml -x --suri //Alice
 
 ACCUMULATOR_HASH=$(cat target/ink/accumulator/*.contract | jq -r .source.hash)
 ADDER_HASH=$(cat target/ink/adder/*.contract | jq -r .source.hash)
