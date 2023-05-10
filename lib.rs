@@ -57,20 +57,20 @@ mod delegator {
             adder_code_hash: Hash,
             subber_code_hash: Hash,
         ) -> Self {
-            let total_balance = Self::env().balance();
+            // let total_balance = Self::env().balance();
             let salt = version.to_le_bytes();
             let accumulator = AccumulatorRef::new(init_value)
-                .endowment(total_balance / 4)
+                .endowment(0)
                 .code_hash(accumulator_code_hash)
                 .salt_bytes(salt)
                 .instantiate();
             let adder = AdderRef::new(accumulator.clone())
-                .endowment(total_balance / 4)
+                .endowment(0)
                 .code_hash(adder_code_hash)
                 .salt_bytes(salt)
                 .instantiate();
             let subber = SubberRef::new(accumulator.clone())
-                .endowment(total_balance / 4)
+                .endowment(0)
                 .code_hash(subber_code_hash)
                 .salt_bytes(salt)
                 .instantiate();
