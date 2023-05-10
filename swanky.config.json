@@ -22,7 +22,11 @@
     "accumulator": {
       "name": "accumulator",
       "language": "ink",
-      "deployments": []
+      "deployments": [],
+      "build": {
+        "timestamp": 1683735028847,
+        "artifactsPath": "/Users/michael.assaf/opt/liquid-staking-sc/artifacts/accumulator/1683735028847"
+      }
     },
     "adder": {
       "name": "adder",
