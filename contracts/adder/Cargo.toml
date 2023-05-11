@@ -6,11 +6,19 @@ edition = "2021"
 
 [dependencies]
 ink = { version = "4.1", default-features = false }
+ink_env = { version = "4.1", default-features = false }
+ink_prelude = { version = "4.1", default-features = false }
 
-accumulator = { path = "../accumulator", default-features = false, features = ["ink-as-dependency"] }
+accumulator = { path = "../accumulator", default-features = false, features = [
+    "ink-as-dependency",
+] }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.3", default-features = false, features = ["derive"], optional = true }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.3", default-features = false, features = [
+    "derive",
+], optional = true }
 
 [lib]
 name = "adder"
@@ -24,11 +32,5 @@ crate-type = [
 
 [features]
 default = ["std"]
-std = [
-    "ink/std",
-    "scale/std",
-    "scale-info/std",
-
-    "accumulator/std",
-]
+std = ["ink/std", "scale/std", "scale-info/std", "accumulator/std"]
 ink-as-dependency = []

@@ -37,6 +37,11 @@
       "name": "subber",
       "language": "ink",
       "deployments": []
+    },
+    "staker": {
+      "name": "staker",
+      "language": "ink",
+      "deployments": []
     }
   },
   "networks": {

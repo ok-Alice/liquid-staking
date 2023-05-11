@@ -56,6 +56,7 @@ mod delegator {
             accumulator_code_hash: Hash,
             adder_code_hash: Hash,
             subber_code_hash: Hash,
+            staker_code_hash: Hash,
         ) -> Self {
             // let total_balance = Self::env().balance();
             let salt = version.to_le_bytes();
@@ -64,7 +65,7 @@ mod delegator {
                 .code_hash(accumulator_code_hash)
                 .salt_bytes(salt)
                 .instantiate();
-            let adder = AdderRef::new(accumulator.clone())
+            let adder = AdderRef::new(accumulator.clone(), staker_code_hash)
                 .endowment(0)
                 .code_hash(adder_code_hash)
                 .salt_bytes(salt)
@@ -108,6 +109,16 @@ mod delegator {
                     self.which = Which::Adder;
                 }
             }
+        }
+
+        #[ink(message)]
+        pub fn stake(&mut self, by: i32) {
+            self.adder.stake(by);
+        }
+
+        #[ink(message)]
+        pub fn get_stake(&self) -> i32 {
+            self.adder.get_stake()
         }
     }
 
