@@ -12,8 +12,6 @@ In order to test this bundle of smart contracts you need to execute the
 following steps.
 
 You can upload the contracts using our [Contracts UI](https://contracts-ui.substrate.io/).
-If you want to test it locally, our [`substrate-contracts-node`](https://use.ink/getting-started/setup/#installing-the-substrate-smart-contracts-node)
-is an easy way to get a local smart contract chain running.
 
 Before anything, make sure you are running a local node.
 I prefer swanky node - `swanky node start`.
