@@ -1,5 +1,5 @@
 [package]
-name = "adder"
+name = "issuer"
 version = "4.1.0"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2021"
@@ -9,10 +9,6 @@ ink = { version = "4.1", default-features = false }
 ink_env = { version = "4.1", default-features = false }
 ink_prelude = { version = "4.1", default-features = false }
 
-accumulator = { path = "../accumulator", default-features = false, features = [
-    "ink-as-dependency",
-] }
-
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
     "derive",
 ] }
@@ -21,7 +17,7 @@ scale-info = { version = "2.3", default-features = false, features = [
 ], optional = true }
 
 [lib]
-name = "adder"
+name = "issuer"
 path = "src/lib.rs"
 crate-type = [
     # Used for normal contract Wasm blobs.
@@ -32,5 +28,5 @@ crate-type = [
 
 [features]
 default = ["std"]
-std = ["ink/std", "scale/std", "scale-info/std", "accumulator/std"]
+std = ["ink/std", "scale/std", "scale-info/std"]
 ink-as-dependency = []

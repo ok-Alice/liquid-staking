@@ -19,7 +19,7 @@ mod staker {
         }
 
         #[ink(message)]
-        pub fn get_stake(&self) -> i32 {
+        pub fn unstake(&self) -> i32 {
             self.num
         }
     }

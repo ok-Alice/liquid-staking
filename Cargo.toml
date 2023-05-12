@@ -8,12 +8,19 @@ publish = false
 [dependencies]
 ink = { version = "4.1", default-features = false }
 
-scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.3", default-features = false, features = ["derive"], optional = true }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
+    "derive",
+] }
+scale-info = { version = "2.3", default-features = false, features = [
+    "derive",
+], optional = true }
 
-adder = { path = "contracts/adder", default-features = false, features = ["ink-as-dependency"] }
-subber = { path = "contracts/subber", default-features = false, features = ["ink-as-dependency"] }
-accumulator = { path = "contracts/accumulator", default-features = false, features = ["ink-as-dependency"] }
+issuer = { path = "contracts/issuer", default-features = false, features = [
+    "ink-as-dependency",
+] }
+staker = { path = "contracts/staker", default-features = false, features = [
+    "ink-as-dependency",
+] }
 
 [dev-dependencies]
 ink_e2e = { version = "4.1" }
@@ -25,19 +32,9 @@ crate-type = ["cdylib"]
 
 [features]
 default = ["std"]
-std = [
-    "ink/std",
-    "scale/std",
-    "scale-info/std",
-
-    "adder/std",
-    "subber/std",
-    "accumulator/std",
-]
+std = ["ink/std", "scale/std", "scale-info/std", "issuer/std", "staker/std"]
 ink-as-dependency = []
 e2e-tests = []
 
 [workspace]
-members = [
-    "contracts/*"
-]
+members = ["contracts/*"]
