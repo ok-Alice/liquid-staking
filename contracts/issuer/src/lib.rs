@@ -71,25 +71,45 @@ mod issuer {
             };
         }
 
-        /// Vec with stake caller, own caller 
+        /// Vec with staker account_id, staker caller, own caller 
         #[ink(message)]
         pub fn callers(&self) -> Vec<AccountId> {
-            return match build_call::<DefaultEnvironment>()
+            let staker_account_id =  match build_call::<DefaultEnvironment>()
+            .delegate(self.staker_code_hash)
+            .exec_input(ExecutionInput::new(Selector::new(ink::selector_bytes!(
+                "account_id"
+            ))))
+            .returns::<AccountId>()
+            .try_invoke()
+                {
+                    Ok(value) => value,
+                    Err(err) => match err {
+                        ink_env::Error::Decode(err) => {
+                            panic!("Failed to decode return value: {:?}", err.to_string())
+                        }
+                        _ => panic!("Failed to invoke `caller`"),
+                    },
+                };
+
+
+            let staker_caller =  match build_call::<DefaultEnvironment>()
             .delegate(self.staker_code_hash)
             .exec_input(ExecutionInput::new(Selector::new(ink::selector_bytes!(
                 "caller"
             ))))
             .returns::<AccountId>()
             .try_invoke()
-        {
-            Ok(value) => vec![value, self.env().caller() ],
-            Err(err) => match err {
-                ink_env::Error::Decode(err) => {
-                    panic!("Failed to decode return value: {:?}", err.to_string())
-                }
-                _ => panic!("Failed to invoke `caller`"),
-            },
-        };
+                {
+                    Ok(value) => value,
+                    Err(err) => match err {
+                        ink_env::Error::Decode(err) => {
+                            panic!("Failed to decode return value: {:?}", err.to_string())
+                        }
+                        _ => panic!("Failed to invoke `caller`"),
+                    },
+                };
+
+            vec![staker_account_id, staker_caller, self.env().caller()]
 
         }
 

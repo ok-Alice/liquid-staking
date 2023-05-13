@@ -25,7 +25,12 @@ mod staker {
 
         #[ink(message)]
         pub fn caller(&self) -> AccountId {
-            return self.env().caller();
+            self.env().caller()
+        }
+
+        #[ink(message)]
+        pub fn account_id(&self) -> AccountId {
+            self.env().account_id()
         }
     }
 }
