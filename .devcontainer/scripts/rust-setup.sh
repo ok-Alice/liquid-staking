@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# Fix memory leakage from aarm64 mac
-echo "[net]" > $CARGO_HOME/config.toml
-echo "git-fetch-with-cli = true" >> $CARGO_HOME/config.toml
+
+arch=$(uname -i)
+if  [[ $arch == arm* ]]; then
+    # Fix memory leakage from aarm64 mac
+    echo "[net]" > $CARGO_HOME/config.toml
+    echo "git-fetch-with-cli = true" >> $CARGO_HOME/config.toml
+fi
 
 rustup install stable-x86_64-unknown-linux-gnu
 

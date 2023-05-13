@@ -19,7 +19,7 @@ fi
 
 if ! npm list -g | grep -q "serve"; then
   echo "serve is not installed globally, installing..."
-  npm install -g serve
+  sudo npm install -g serve
 else
   echo "serve is already installed globally"
 fi
