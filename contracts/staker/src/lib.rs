@@ -22,5 +22,10 @@ mod staker {
         pub fn unstake(&self) -> i32 {
             self.num
         }
+
+        #[ink(message)]
+        pub fn caller(&self) -> AccountId {
+            return self.env().caller();
+        }
     }
 }

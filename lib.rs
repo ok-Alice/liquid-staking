@@ -2,6 +2,8 @@
 
 #[ink::contract]
 mod delegator {
+    use ink::prelude::vec::Vec;
+
     use issuer::IssuerRef;
 
     /// Delegates calls to `issuer` contract to stake and unstake.
@@ -46,6 +48,14 @@ mod delegator {
         #[ink(message)]
         pub fn unstake(&self) {
             self.issuer.unstake();
+        }
+
+        /// List callers from subsequent cross-contract calls
+        #[ink(message)]
+        pub fn callers(&self) -> Vec<AccountId> {
+            let mut callers = self.issuer.callers();
+            callers.push(self.env().caller());
+            callers
         }
     }
 }

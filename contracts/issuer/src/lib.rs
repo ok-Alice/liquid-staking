@@ -4,6 +4,11 @@ pub use self::issuer::{Issuer, IssuerRef};
 
 #[ink::contract]
 mod issuer {
+    use ink::prelude::{
+        vec,
+        vec::Vec,
+    };
+
     use ink_env::{
         call::{build_call, ExecutionInput, Selector},
         DefaultEnvironment,
@@ -65,5 +70,29 @@ mod issuer {
                 },
             };
         }
+
+        /// Vec with stake caller, own caller 
+        #[ink(message)]
+        pub fn callers(&self) -> Vec<AccountId> {
+            return match build_call::<DefaultEnvironment>()
+            .delegate(self.staker_code_hash)
+            .exec_input(ExecutionInput::new(Selector::new(ink::selector_bytes!(
+                "caller"
+            ))))
+            .returns::<AccountId>()
+            .try_invoke()
+        {
+            Ok(value) => vec![value, self.env().caller() ],
+            Err(err) => match err {
+                ink_env::Error::Decode(err) => {
+                    panic!("Failed to decode return value: {:?}", err.to_string())
+                }
+                _ => panic!("Failed to invoke `caller`"),
+            },
+        };
+
+        }
+
+
     }
 }
