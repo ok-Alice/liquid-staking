@@ -25,3 +25,12 @@ If you haven't set up swanky CLI, you can run the `./.devcontainer/scripts/swank
 2. Upload the `.contract` bundle of Issuer, Staker to chain and instantiate the Delegator contract by execution `./deploy.sh`
 3. Now you are able to run the operations provided by the Delegator smart contract.
    Namely `delegate` to delegate the call to the Issuer contract.
+
+# Caller-test
+
+The `callers` function from delegator will return a Vec with the following addresses:
+- account_id() of staker
+- caller() of staker
+- caller() of issuer
+- caller() of delegator
+
