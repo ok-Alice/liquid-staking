@@ -6,7 +6,10 @@
     "esModuleInterop": true,
     "outDir": "dist",
     "noImplicitAny": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": [
+      "node"
+    ]
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

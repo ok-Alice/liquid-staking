@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "run-node": "swanky node start",
+    "deploy": "ts-node scripts/deploy-diamond-and-facets.ts",
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\" --exit --timeout 20000"
   },
   "engines": {
