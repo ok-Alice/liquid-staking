@@ -43,6 +43,7 @@ pub mod staker_facet_v1 {
     }
 
     impl Pausable for StakerFacetV1 {
+        #[ink(message)]
         fn paused(&self) -> bool {
             self.pause.paused()
         }

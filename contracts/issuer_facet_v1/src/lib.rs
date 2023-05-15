@@ -19,7 +19,7 @@ pub mod issuer_facet_v1 {
         ownable: ownable::Data,
     }
 
-    // impl PSP22 for StakerFacetV1 {}
+    impl PSP22 for StakerFacetV1 {}
 
     impl StakerFacetV1 {
         #[ink(constructor)]
