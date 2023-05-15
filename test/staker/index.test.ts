@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import StakerFactory from "./typedContract/constructors/staker";
-import Staker from "./typedContract/contracts/staker";
+import StakerFactory from "./typedContract/constructors/staker_facet_v1";
+import Staker from "./typedContract/contracts/staker_facet_v1";
 import { ApiPromise, WsProvider, Keyring } from "@polkadot/api";
 import { KeyringPair } from "@polkadot/keyring/types";
 
@@ -12,7 +12,7 @@ const wsProvider = new WsProvider("ws://127.0.0.1:9944");
 // Create a keyring instance
 const keyring = new Keyring({ type: "sr25519" });
 
-describe("staker test", () => {
+describe("staker_facet_v1 test", () => {
   let stakerFactory: StakerFactory;
   let api: ApiPromise;
   let deployer: KeyringPair;
