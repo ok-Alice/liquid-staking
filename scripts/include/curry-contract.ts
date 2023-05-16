@@ -15,15 +15,15 @@ export const deployContract = async (
     api: ApiPromise,
     account: Keyring,
     contractName: string,
+    overridePath?: string,
     ...args: any[]
 ): Promise<typeof ContractPromise> => {
-    console.log(`deployContract(${contractName})`);
     return new Promise(async (resolve, reject) => {
-        const contractJson = fetchContractJson(contractName);
+        const contractJson = overridePath ? JSON.parse(fs.readFileSync(overridePath + "/" + contractName + ".contract",'utf-8')) : fetchContractJson(contractName);
 
         const code = new CodePromise(api, contractJson, contractJson.wasm);
 
-        const gasLimit = 100000n * 1000000n;
+        const gasLimit = api.registry.createType('WeightV2', { refTime: 100000n * 1000000n, proofSize: 100000n });
         const storageDepositLimit = null;
 
         const tx = code.tx.new({ gasLimit, storageDepositLimit}, ...args);
