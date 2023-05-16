@@ -1,7 +1,7 @@
 namespace deployDiamond {
 
     const { ApiPromise, WsProvider, Keyring } = require('@polkadot/api');
-    const { deployContract, contractQuery, contractTx, transferFromTo } = require('./include/curry-contract');
+    const { deployContract, contractQuery, contractTx, transferFromTo } = require('./include/contract-operations');
 
 
     const {AbiMessage} = require('@polkadot/api-contract/types');
