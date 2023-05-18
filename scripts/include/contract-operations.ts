@@ -75,13 +75,14 @@ export const deployContract = async (
 
 
 export const contractQuery = async (
+    api: ApiPromise,
     account: string,
     contract: typeof ContractPromise,
     method: string,
     ...args: any[]
 ) : Promise<any> => {
     return new Promise(async (resolve, reject) => {
-        const gasLimit = 100000n * 1000000n;
+        const gasLimit = api.registry.createType('WeightV2', { refTime: 100000n * 1000000n, proofSize: 100000n });
         const storageDepositLimit = null;
 
         const { gasRequired, storageDeposit, result, output } = await contract.query[method](
