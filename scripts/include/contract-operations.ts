@@ -1,6 +1,6 @@
 import { ApiPromise, Keyring } from "@polkadot/api";
 import { BN, BN_ONE } from "@polkadot/util";
-import type { WeightV2 } from '@polkadot/types/interfaces'
+import type { WeightV2 } from "@polkadot/types/interfaces";
 import fs from "fs";
 import { delay } from "rxjs";
 const {
@@ -129,19 +129,37 @@ export const contractQuery = async (
 };
 
 export const contractTx = async (
+  api: ApiPromise,
   account: Keyring,
+  accountAddress: string,
   contract: typeof ContractPromise,
   method: string,
   ...args: any[]
 ): Promise<any> => {
   return new Promise(async (resolve, reject) => {
-    const gasLimit = 100000n * 1000000n;
     const storageDepositLimit = null;
+
+    const { gasRequired } = await contract.query[method](
+      accountAddress,
+      {
+        gasLimit: api?.registry.createType("WeightV2", {
+          refTime: MAX_CALL_WEIGHT,
+          proofSize: PROOFSIZE,
+        }) as WeightV2,
+        storageDepositLimit,
+      },
+      ...args
+    );
+
+    const gasLimit = api?.registry.createType(
+      "WeightV2",
+      gasRequired
+    ) as WeightV2;
 
     const txresult = new Promise<typeof ContractSubmittableResult>(
       async (resolve, reject) => {
         await contract.tx[method](
-          { storageDepositLimit, gasLimit },
+          { gasLimit, storageDepositLimit },
           ...args
         ).signAndSend(account, (result: typeof ContractSubmittableResult) => {
           const rejectPromise = (error: any) => {
