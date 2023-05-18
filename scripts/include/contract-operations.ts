@@ -111,8 +111,6 @@ export const contractTx = async (
         const gasLimit = 100000n * 1000000n;
         const storageDepositLimit = null;
 
-        //console.log(`Calling ${contract.address} method ${method} with args ${args}`);
-
         const txresult = new Promise<typeof ContractSubmittableResult>(async(resolve, reject) => {
             await contract.tx[method]({ storageDepositLimit, gasLimit }, ...args)
                 .signAndSend(
