@@ -78,7 +78,7 @@ namespace deployDiamond {
         // Deploy Flipper Facet contract
         //
 
-        const issuerFacetContract = await deployContract( api, alice, "issuer_facet_v1");
+        const issuerFacetContract = await deployContract(api, alice, "issuer_facet_v1");
 
         const issuerFacetHash = issuerFacetContract.abi.info.source.wasmHash.toString();
         console.log("issuer_facet_v1 contract hash:", issuerFacetHash);
@@ -145,26 +145,26 @@ namespace deployDiamond {
         const diamond_contract = await deployContract( api, alice, "delegator", "./target/ink", alice.address);
         console.log(`diamond contract: ${diamond_contract.address}`);
 
-        const diamond_owner = await contractQuery(alice.address, diamond_contract, "ownable::owner");
+        const diamond_owner = await contractQuery(api, alice.address, diamond_contract, "ownable::owner");
         console.log(`diamond_owner: ${diamond_owner}`);
 
         //const tx_result = await transferFromTo(api, alice,diamond_contract.address, BigInt(8*1e19));
         //console.log(`transfer result: ${tx_result.status}`);
 
-        const diamond_cut_result_issuer_facet = await contractTx(alice, diamond_contract, 'diamond::diamondCut',
-            issuerFacetCut, issuerFacetCutInit );
-        console.log(`diamond_cut add issuer facet:  ${diamond_cut_result_issuer_facet.status}`);
+        // const diamond_cut_result_issuer_facet = await contractTx(alice, diamond_contract, 'diamond::diamondCut',
+        //     issuerFacetCut, issuerFacetCutInit );
+        // console.log(`diamond_cut add issuer facet:  ${diamond_cut_result_issuer_facet.status}`);
 
-        const diamond_cut_result_staker_facet = await contractTx(alice, diamond_contract, 'diamond::diamondCut',
-            stakerFacetCut, stakerFacetCutInit );
-        console.log(`diamond_cut add staker facet:  ${diamond_cut_result_staker_facet.status}`);
+        // const diamond_cut_result_staker_facet = await contractTx(alice, diamond_contract, 'diamond::diamondCut',
+        //     stakerFacetCut, stakerFacetCutInit );
+        // console.log(`diamond_cut add staker facet:  ${diamond_cut_result_staker_facet.status}`);
 
-        const diamond_cut_result_diamond_caller_facet = await contractTx(alice, diamond_contract, 'diamond::diamondCut',
-            diamondCallerCut, diamondCallerCutInit );
-        console.log(`diamond_cut add staker facet:  ${diamond_cut_result_diamond_caller_facet.status}`);
+        // const diamond_cut_result_diamond_caller_facet = await contractTx(alice, diamond_contract, 'diamond::diamondCut',
+        //     diamondCallerCut, diamondCallerCutInit );
+        // console.log(`diamond_cut add staker facet:  ${diamond_cut_result_diamond_caller_facet.status}`);
 
-        const facets = await contractQuery(alice.address, diamond_contract, 'diamondLoupe::facets')
-        console.log(`diamondLoup::facets: ${facets}`);
+        // const facets = await contractQuery(alice.address, diamond_contract, 'diamondLoupe::facets')
+        // console.log(`diamondLoup::facets: ${facets}`);
 
         ///////////////
         //
@@ -183,11 +183,11 @@ namespace deployDiamond {
         // console.log(`Get Flipper state via Diamond: ${fstate2}`);
 
         // redirect psp22_contract through diamond
-        diamondCallerContract.address = diamond_contract.address;
+        // diamondCallerContract.address = diamond_contract.address;
 
-        const balance_alice = await contractQuery(alice.address, diamondCallerContract, "psp22::balance_of", alice.address, alice.address);
-        console.log(`PSP22 Balance Alice: ${balance_alice}`);
-        //
+        // const balance_alice = await contractQuery(alice.address, diamondCallerContract, "psp22::balance_of", alice.address, alice.address);
+        // console.log(`PSP22 Balance Alice: ${balance_alice}`);
+        // //
         // const approve = await contractTx(alice, issuerFacetContract, 'psp22::approve',  bob.address, 100);
         // console.log(`PSP22 Approve allowance: ${approve.status}`);
         //
