@@ -20,12 +20,6 @@ openbrush = { git = "https://github.com/727-Ventures/openbrush-contracts", versi
 [lib]
 name = "issuer_facet_v1"
 path = "src/lib.rs"
-crate-type = [
-    # Used for normal contract Wasm blobs.
-    "cdylib",
-    # Used for ABI generation.
-    "rlib",
-]
 
 [features]
 default = ["std"]

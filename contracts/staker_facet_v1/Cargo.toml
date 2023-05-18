@@ -19,9 +19,6 @@ ink_e2e = "4.1.0"
 [lib]
 name = "staker_facet_v1"
 path = "src/lib.rs"
-crate-type = [
-    "cdylib",
-]
 
 [features]
 default = ["std"]
