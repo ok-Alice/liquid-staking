@@ -225,39 +225,39 @@ namespace deployDiamond {
       `diamond_cut add issuer facet:  ${diamond_cut_result_issuer_facet.status}`
     );
 
-    const diamond_cut_result_staker_facet = await contractTx(
-      api,
-      alice,
-      alice.address,
-      diamond_contract,
-      "diamond::diamondCut",
-      stakerFacetCut,
-      stakerFacetCutInit
-    );
-    console.log(
-      `diamond_cut add staker facet:  ${diamond_cut_result_staker_facet.status}`
-    );
+    // const diamond_cut_result_staker_facet = await contractTx(
+    //   api,
+    //   alice,
+    //   alice.address,
+    //   diamond_contract,
+    //   "diamond::diamondCut",
+    //   stakerFacetCut,
+    //   stakerFacetCutInit
+    // );
+    // console.log(
+    //   `diamond_cut add staker facet:  ${diamond_cut_result_staker_facet.status}`
+    // );
 
-    const diamond_cut_result_diamond_caller_facet = await contractTx(
-      api,
-      alice,
-      alice.address,
-      diamond_contract,
-      "diamond::diamondCut",
-      diamondCallerCut,
-      diamondCallerCutInit
-    );
-    console.log(
-      `diamond_cut add staker facet:  ${diamond_cut_result_diamond_caller_facet.status}`
-    );
+    // const diamond_cut_result_diamond_caller_facet = await contractTx(
+    //   api,
+    //   alice,
+    //   alice.address,
+    //   diamond_contract,
+    //   "diamond::diamondCut",
+    //   diamondCallerCut,
+    //   diamondCallerCutInit
+    // );
+    // console.log(
+    //   `diamond_cut add staker facet:  ${diamond_cut_result_diamond_caller_facet.status}`
+    // );
 
-    const facets = await contractQuery(
-      api,
-      alice.address,
-      diamond_contract,
-      "diamondLoupe::facets"
-    );
-    console.log(`diamondLoup::facets: ${facets}`);
+    // const facets = await contractQuery(
+    //   api,
+    //   alice.address,
+    //   diamond_contract,
+    //   "diamondLoupe::facets"
+    // );
+    // console.log(`diamondLoup::facets: ${facets}`);
 
     ///////////////
     //

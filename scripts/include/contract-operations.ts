@@ -151,15 +151,10 @@ export const contractTx = async (
       ...args
     );
 
-    const gasLimit = api?.registry.createType(
-      "WeightV2",
-      gasRequired
-    ) as WeightV2;
-
     const txresult = new Promise<typeof ContractSubmittableResult>(
       async (resolve, reject) => {
         await contract.tx[method](
-          { gasLimit, storageDepositLimit },
+          { gasLimit: gasRequired, storageDepositLimit },
           ...args
         ).signAndSend(account, (result: typeof ContractSubmittableResult) => {
           const rejectPromise = (error: any) => {
@@ -167,8 +162,6 @@ export const contractTx = async (
             console.log(`tx for the error above`, contract.tx.toHuman());
             reject(error);
           };
-
-          console.log(result.toHuman());
 
           if (result.status.isInBlock || result.status.isFinalized) {
             resolve(result);
