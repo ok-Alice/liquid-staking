@@ -109,6 +109,8 @@ export const contractQuery = async (
     }) as WeightV2;
     const storageDepositLimit = null;
 
+    console.log(contract.query);
+
     const { gasRequired, storageDeposit, result, output } =
       await contract.query[method](
         account,

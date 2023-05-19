@@ -177,19 +177,19 @@ namespace deployDiamond {
     // Deploy Diamond contract
     //
 
-    const diamond_contract = await deployContract(
+    const diamondContract = await deployContract(
       api,
       alice,
       "delegator",
       "./target/ink",
       alice.address
     );
-    console.log(`diamond contract: ${diamond_contract.address}`);
+    console.log(`diamond contract: ${diamondContract.address}`);
 
     const diamond_owner = await contractQuery(
       api,
       alice.address,
-      diamond_contract,
+      diamondContract,
       "ownable::owner"
     );
     console.log(`diamond_owner: ${diamond_owner}`);
@@ -201,7 +201,7 @@ namespace deployDiamond {
       api,
       alice,
       alice.address,
-      diamond_contract,
+      diamondContract,
       "diamond::diamondCut",
       issuerFacetCut,
       null
@@ -214,7 +214,7 @@ namespace deployDiamond {
       api,
       alice,
       alice.address,
-      diamond_contract,
+      diamondContract,
       "diamond::diamondCut",
       stakerFacetCut,
       null
@@ -227,7 +227,7 @@ namespace deployDiamond {
       api,
       alice,
       alice.address,
-      diamond_contract,
+      diamondContract,
       "diamond::diamondCut",
       diamondCallerCut,
       null
@@ -239,7 +239,7 @@ namespace deployDiamond {
     const facets = await contractQuery(
       api,
       alice.address,
-      diamond_contract,
+      diamondContract,
       "diamondLoupe::facets"
     );
     console.log(`diamondLoup::facets: ${facets}`);
@@ -248,15 +248,14 @@ namespace deployDiamond {
     //
     // Call Facet functions through diamond
 
-    //redirect flipper_contract through diamond:
-    // stakerFacetContract.address = diamond_contract.address;
-
-    // const fstate = await contractQuery(
-    //   alice.address,
-    //   stakerFacetContract,
-    //   "paused"
-    // );
-    // console.log(`Staker facet paused state: ${fstate}`);
+    const fstate = await contractQuery(
+      api,
+      alice.address,
+      diamondContract,
+      "forward",
+      stakerFacetContract.query["pausable::paused"].meta.selector
+    );
+    console.log(`Staker facet paused state: ${fstate}`);
 
     // const flip = await contractTx(alice, stakerFacetContract, 'flip');
     // console.log(`Set Flip: ${flip.status}`);
