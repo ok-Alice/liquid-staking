@@ -168,6 +168,8 @@ export const contractTx = async (
             reject(error);
           };
 
+          console.log(result.toHuman());
+
           if (result.status.isInBlock || result.status.isFinalized) {
             resolve(result);
           } else if (result.status.isInvalid) {
