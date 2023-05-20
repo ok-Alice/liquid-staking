@@ -248,12 +248,15 @@ namespace deployDiamond {
     //
     // Call Facet functions through diamond
 
+    // stakerFacetContract.address = diamondContract.address;
+
+    stakerFacetContract.address = diamondContract.address;
+
     const fstate = await contractQuery(
       api,
       alice.address,
-      diamondContract,
-      "forward",
-      stakerFacetContract.query["pausable::paused"].meta.selector
+      stakerFacetContract,
+      "pausable::paused"
     );
     console.log(`Staker facet paused state: ${fstate}`);
 
