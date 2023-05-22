@@ -19,5 +19,4 @@ cargo install cargo-contract --force --locked
 
 rustup component add rust-src --toolchain stable-x86_64-unknown-linux-gnu
 
-sudo apt install jq
-sudo apt reinstall libc-bin
+brew install jq

@@ -1,7 +1,7 @@
 [package]
 name = "delegator"
 version = "4.1.0"
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Snowmead <michael.assaf.edge@gmail.com>"]
 edition = "2021"
 publish = false
 
@@ -15,12 +15,16 @@ scale-info = { version = "2.3", default-features = false, features = [
     "derive",
 ], optional = true }
 
-issuer = { path = "contracts/issuer", default-features = false, features = [
+issuer_facet_v1 = { path = "contracts/issuer_facet_v1", default-features = false, features = [
     "ink-as-dependency",
 ] }
-staker = { path = "contracts/staker", default-features = false, features = [
+staker_facet_v1 = { path = "contracts/staker_facet_v1", default-features = false, features = [
     "ink-as-dependency",
 ] }
+diamond_caller = { path = "contracts/diamond_caller", default-features = false, features = [
+    "ink-as-dependency",
+] }
+openbrush = { git = "https://github.com/727-Ventures/openbrush-contracts", version = "^3.1.1", default-features = false, features = ["diamond", "ownable"] }
 
 [dev-dependencies]
 ink_e2e = { version = "4.1" }
@@ -28,11 +32,10 @@ ink_e2e = { version = "4.1" }
 [lib]
 name = "delegator"
 path = "lib.rs"
-crate-type = ["cdylib"]
 
 [features]
 default = ["std"]
-std = ["ink/std", "scale/std", "scale-info/std", "issuer/std", "staker/std"]
+std = ["ink/std", "scale/std", "scale-info/std", "issuer_facet_v1/std", "staker_facet_v1/std", "diamond_caller/std", "openbrush/std"]
 ink-as-dependency = []
 e2e-tests = []
 
