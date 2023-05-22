@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./contracts/staker_facet_v1/Cargo.toml"
+    ]
+}

@@ -1,7 +1,0 @@
-{
-  "projectFiles": [
-    "contracts/adder/*"
-  ],
-  "artifactsPath": "artifacts",
-  "typechainGeneratedPath": "typedContract"
-}
