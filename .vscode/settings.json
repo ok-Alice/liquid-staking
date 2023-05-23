@@ -1,5 +1,8 @@
 {
     "rust-analyzer.linkedProjects": [
-        "./contracts/staker_facet_v1/Cargo.toml"
-    ]
+        "./contracts/staker_facet_v1/Cargo.toml",
+        "./contracts/issuer_staker/Cargo.toml",
+        "./contracts/issuer_staker/Cargo.toml"
+    ],
+    "rust-analyzer.showUnlinkedFileNotification": false
 }

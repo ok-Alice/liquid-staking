@@ -35,8 +35,8 @@ std = [
     "ink/std",
     "scale/std",
     "scale-info/std",
-    # These dependencies
     "openbrush/std",
+    "dapps_staking_extension/std",
 ]
 ink-as-dependency = []
 e2e-tests = []
