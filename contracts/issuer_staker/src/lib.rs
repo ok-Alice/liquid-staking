@@ -98,7 +98,7 @@ pub mod issuer_staker {
         }
 
         #[ink(message, payable)]
-        pub fn bond_and_stake(&mut self) -> Result<(), DSError> {
+        pub fn bond_nomination_pool(&mut self) -> Result<(), DSError> {
             // make sure the caller is recorded as staker
 
             let contract = self.env().account_id();
@@ -107,7 +107,7 @@ pub mod issuer_staker {
                 contract: contract.encode().try_into().unwrap(),
                 value,
             };
-            ::ink::env::chain_extension::ChainExtensionMethod::build(0001u32)
+            ::ink::env::chain_extension::ChainExtensionMethod::build(0x10001)
                 .input::<NominationPoolStakingValueInput<Balance>>()
                 .output::<(), false>()
                 .handle_error_code::<DSError>()
