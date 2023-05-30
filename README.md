@@ -1,27 +1,27 @@
-# Delegator Smart Contract
+# Liquid Staking
 
-The delegator smart contract is our showcase for executing other smart contracts on-chain.
+The liquid staking project is mostly comprised of smart contracts. At this current time, there is only the `issuer-staker` contract that contains the implementation for issuing liquid tokens based on the users staked Dot and performing operations on our nomination pool through the nomination-pool pallet manually implemented in the Astar node (these methods are exposed through chain extensions). 
 
-It consists in total of 3 different smart contract:
+The nomination-pool pallet will execute an XCM transaction to the Polkadot relay chain to stake, unstake, nominate, etc.
 
-- Delegator (root): Delegates calls either to the Adder or Subber smart contract
-- Issuer: Increases a value in the Accumulator smart contract
-- Subber: Decreases a value in the Accumulator smart contract
+## Local Development
 
-In order to test this bundle of smart contracts you need to execute the
-following steps.
+### Zombienet Setup
 
-You can upload the contracts using our [Contracts UI](https://contracts-ui.substrate.io/).
+Before you do anything, follow the steps to setup a local environment of parachain and relay chain. 
+You will need this to test the contracts that rely on chain extensions added to the astar node.
+1. Download the latest binary from [polkadot](https://github.com/paritytech/polkadot/releases) or clone the repository and build it manually using `cargo build --release`
+2. Clone the [astar-frame]() repository from okAlice and build the project using `cargo build --release`
+3. Clone the [Astar]() repository from okAlice and build the project using `cargo build --release`
+4. Make sure all paths are pointing to the appropriate binaries in the [zombienet configuration file](https://github.com/ok-Alice/Astar/blob/master/third-party/zombienet/single_parachain.toml)
+5. In the `Astar` repository, run your relay chain and astar parachain node using the command `zombienet -p native spawn ./third-party/zombienet/single_parachain.toml`
+6. In [Contracts UI](https://contracts-ui.substrate.io) and [PolkadotJs](https://cloudflare-ipfs.com/ipns/dotapps.io/#/explorer) change the `ws` port to the one shown in the `zombienet` output. You should copy the port from the `collator1` node which is normally shown at the end of the output.
 
-Before anything, make sure you are running a local node.
-I prefer swanky node - `swanky node start`.
-If you haven't set up swanky CLI, you can run the `./.devcontainer/scripts/swanky-setup.sh` script.
+### Building & Deploying Contracts
+
+Now you can build and deploy the necessary contracts for liquid staking.
 
 1. Compile all contracts using the `./build-all.sh` script.
    You will receive the respective `.contract` bundles for all the smart contracts in the `target/ink/` folder:
-   - `target/ink/delegator.contract`
-   - `target/ink/issuer/issuer.contract`
-   - `target/ink/staker/staker.contract`
-2. Upload the `.contract` bundle of Issuer, Staker to chain and instantiate the Delegator contract by execution `./deploy.sh`
-3. Now you are able to run the operations provided by the Delegator smart contract.
-   Namely `delegate` to delegate the call to the Issuer contract.
+   - `target/ink/issuer_staker/issuer_staker.contract`
+2. Upload the `.contract` bundles to the chain and instantiate 
