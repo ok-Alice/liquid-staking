@@ -5,6 +5,13 @@
 pub mod issuer_staker {
     use dapps_staking_extension::*;
     use openbrush::{contracts::pausable::*, traits::Storage};
+    use scale::{Decode, Encode, MaxEncodedLen};
+
+    #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode, MaxEncodedLen)]
+    struct NominationPoolStakingValueInput<Balance> {
+        pub contract: [u8; 32],
+        pub value: Balance,
+    }
 
     #[ink(storage)]
     #[derive(Default, Storage)]
@@ -96,7 +103,15 @@ pub mod issuer_staker {
 
             let contract = self.env().account_id();
             let value = self.env().transferred_value();
-            DappsStaking::bond_and_stake(contract, value)
+            let input = NominationPoolStakingValueInput::<Balance> {
+                contract: contract.encode().try_into().unwrap(),
+                value,
+            };
+            ::ink::env::chain_extension::ChainExtensionMethod::build(0001u32)
+                .input::<NominationPoolStakingValueInput<Balance>>()
+                .output::<(), false>()
+                .handle_error_code::<DSError>()
+                .call(&input)
         }
 
         #[ink(message)]
