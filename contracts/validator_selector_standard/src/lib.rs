@@ -2,8 +2,7 @@
 #![feature(min_specialization)]
 
 #[openbrush::contract]
-pub mod issuer_staker {
-    use nomination_pool_staking_chain_extension_types::NPSError;
+pub mod validator_selector_standard {
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode, MaxEncodedLen};
 
@@ -15,23 +14,16 @@ pub mod issuer_staker {
 
     #[ink(storage)]
     #[derive(Default, Storage)]
-    pub struct IssuerStaker {
+    pub struct ValidatorSelectorStandard {
         #[storage_field]
         pause: pausable::Data,
         flipped: bool,
     }
 
-    impl IssuerStaker {
+    impl ValidatorSelectorStandard {
         #[ink(constructor)]
         pub fn new() -> Self {
             Self::default()
-        }
-
-        #[ink(message)]
-        #[openbrush::modifiers(when_not_paused)]
-        pub fn flip(&mut self) -> Result<(), PausableError> {
-            self.flipped = !self.flipped;
-            Ok(())
         }
 
         #[ink(message)]
@@ -50,102 +42,18 @@ pub mod issuer_staker {
         }
     }
 
-    impl Pausable for IssuerStaker {
+    impl Pausable for ValidatorSelectorStandard {
         #[ink(message)]
         fn paused(&self) -> bool {
             self.pause.paused()
         }
     }
 
-    impl IssuerStaker {
+    impl ValidatorSelectorStandard {
         #[ink(message)]
-        pub fn read_current_era(&self) -> u32 {
-            0u32
-        }
-
-        #[ink(message)]
-        pub fn read_unbonding_period(&self) -> u32 {
-            0u32
-        }
-
-        #[ink(message)]
-        pub fn read_era_reward(&self, era: u32) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn read_era_staked(&self, era: u32) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn read_staked_amount(&self, account: AccountId) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn read_staked_amount_on_contract(
-            &self,
-            staker: AccountId,
-            contract: AccountId,
-        ) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn read_contract_stake(&self, account: AccountId) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message, payable)]
-        pub fn bond_nomination_pool(&mut self) -> Result<(), NPSError> {
-            // make sure the caller is recorded as staker
-
-            let contract = self.env().account_id();
-            let value = self.env().transferred_value();
-            let input = NominationPoolStakingValueInput::<Balance> {
-                contract: contract.encode().try_into().unwrap(),
-                value,
-            };
-            ::ink::env::chain_extension::ChainExtensionMethod::build(0x10001)
-                .input::<NominationPoolStakingValueInput<Balance>>()
-                .output::<(), false>()
-                .handle_error_code::<NPSError>()
-                .call(&input)
-        }
-
-        #[ink(message)]
-        pub fn unbond_and_unstake(&mut self, value: Balance) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn withdraw_unbonded(&mut self) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn claim_dapp(&mut self, account_id: AccountId, era: u32) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn claim_staker(&mut self) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn set_reward_destination(&mut self, destination: u8) -> Result<(), NPSError> {
-            Ok(())
-        }
-
-        #[ink(message)]
-        pub fn nomination_transfer(
-            &mut self,
-            origin_contract: AccountId,
-            target_contract: AccountId,
-            value: Balance,
-        ) -> Result<(), NPSError> {
+        #[openbrush::modifiers(when_not_paused)]
+        pub fn select_validator(&mut self) -> Result<(), PausableError> {
+            // TODO: implement validator selection logic
             Ok(())
         }
     }
@@ -165,7 +73,13 @@ pub mod issuer_staker {
         async fn success_flip_when_not_paused(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
@@ -179,7 +93,13 @@ pub mod issuer_staker {
         async fn success_pause_when_not_paused(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
@@ -193,7 +113,13 @@ pub mod issuer_staker {
         async fn success_change_state(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
@@ -207,7 +133,13 @@ pub mod issuer_staker {
         async fn failed_double_pause(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
@@ -225,7 +157,13 @@ pub mod issuer_staker {
         async fn success_pause_and_unpause(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
@@ -240,7 +178,13 @@ pub mod issuer_staker {
         async fn failed_unpause(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
@@ -254,17 +198,25 @@ pub mod issuer_staker {
         }
 
         #[ink_e2e::test]
-        async fn failed_flip_when_paused(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+        async fn failed_select_validator_when_paused(
+            mut client: ink_e2e::Client<C, E>,
+        ) -> E2EResult<()> {
             let constructor = ContractRef::new();
             let address = client
-                .instantiate("issuer_staker", &ink_e2e::alice(), constructor, 0, None)
+                .instantiate(
+                    "validator_selector_standard",
+                    &ink_e2e::alice(),
+                    constructor,
+                    0,
+                    None,
+                )
                 .await
                 .expect("instantiate failed")
                 .account_id;
 
             assert_eq!(method_call!(client, address, pause), Ok(()));
             assert!(matches!(
-                method_call_dry_run!(client, address, flip),
+                method_call_dry_run!(client, address, select_validator),
                 Err(_)
             ));
 
