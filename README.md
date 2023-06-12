@@ -25,6 +25,6 @@ Now you can build and deploy the necessary contracts for liquid staking.
 1. Compile all contracts using the `./build-all.sh` script.
    You will receive the respective `.contract` bundles for all the smart contracts in the `target/ink/` folder:
    - `target/ink/issuer_staker/issuer_staker.contract`
-   - `target/ink/issuer_staker/oracle_validators.contract`
+   - `target/ink/issuer_staker/oracle-validators.contract`
    - `target/ink/issuer_staker/validator_selector_standard.contract`
 2. Upload the `.contract` bundles to the chain and instantiate 

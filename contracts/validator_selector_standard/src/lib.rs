@@ -6,6 +6,8 @@ pub mod validator_selector_standard {
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode, MaxEncodedLen};
 
+    use oracle_validators::OracleValidatorsRef;
+
     #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode, MaxEncodedLen)]
     struct NominationPoolStakingValueInput<Balance> {
         pub contract: [u8; 32],
@@ -13,8 +15,10 @@ pub mod validator_selector_standard {
     }
 
     #[ink(storage)]
-    #[derive(Default, Storage)]
+    #[derive(Storage)]
     pub struct ValidatorSelectorStandard {
+        oracle_validators: OracleValidatorsRef,
+
         #[storage_field]
         pause: pausable::Data,
         flipped: bool,
@@ -22,8 +26,12 @@ pub mod validator_selector_standard {
 
     impl ValidatorSelectorStandard {
         #[ink(constructor)]
-        pub fn new() -> Self {
-            Self::default()
+        pub fn new(oracle_validators: OracleValidatorsRef) -> Self {
+            Self {
+                oracle_validators,
+                pause: pausable::Data::default(),
+                flipped: false,
+            }
         }
 
         #[ink(message)]
@@ -52,9 +60,8 @@ pub mod validator_selector_standard {
     impl ValidatorSelectorStandard {
         #[ink(message)]
         #[openbrush::modifiers(when_not_paused)]
-        pub fn select_validator(&mut self) -> Result<(), PausableError> {
-            // TODO: implement validator selection logic
-            Ok(())
+        pub fn select_validator(&mut self) -> Result<u32, PausableError> {
+            Ok(self.oracle_validators.get_validators())
         }
     }
 

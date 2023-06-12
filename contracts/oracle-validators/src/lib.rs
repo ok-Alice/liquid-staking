@@ -1,6 +1,8 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 #![feature(min_specialization)]
 
+pub use self::oracle_validators::{OracleValidators, OracleValidatorsRef};
+
 #[openbrush::contract]
 pub mod oracle_validators {
     use openbrush::traits::Storage;
@@ -20,6 +22,11 @@ pub mod oracle_validators {
         #[ink(message)]
         pub fn set_validators(&mut self, validators: u32) {
             self.validators = validators;
+        }
+
+        #[ink(message)]
+        pub fn get_validators(&mut self) -> u32 {
+            self.validators
         }
     }
 }

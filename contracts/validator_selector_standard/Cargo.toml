@@ -28,6 +28,10 @@ sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0
     "disable_allocator",
 ] }
 
+oracle_validators = { path = "../oracle-validators", default-features = false, features = [
+    "ink-as-dependency",
+] }
+
 nomination-pool-staking-chain-extension-types = { path = "../../../astar-frame/chain-extensions/types/nomination-pool-staking", default-features = false }
 
 [dev-dependencies]
@@ -44,6 +48,7 @@ std = [
     "scale/std",
     "scale-info/std",
     "openbrush/std",
+    "oracle_validators/std",
     "nomination-pool-staking-chain-extension-types/std",
 ]
 ink-as-dependency = []
