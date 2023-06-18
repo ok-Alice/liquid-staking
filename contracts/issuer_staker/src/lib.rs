@@ -4,8 +4,10 @@
 use scale::{Decode, Encode};
 #[openbrush::contract]
 pub mod issuer_staker {
+    use assets_extension::{*, AssetsExtension};
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode, MaxEncodedLen};
+    use sp_arithmetic::{FixedU128, FixedPointNumber};
     use crate::NPSError;
 
     #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode, MaxEncodedLen)]
@@ -20,6 +22,9 @@ pub mod issuer_staker {
         #[storage_field]
         pause: pausable::Data,
         flipped: bool,
+        exchange_rate: Balance,
+        asset_id: Balance,
+        liquid_asset_id: Balance,
     }
 
     impl IssuerStaker {
@@ -132,6 +137,11 @@ pub mod issuer_staker {
         }
 
         #[ink(message)]
+        pub fn bond_and_stake(&mut self, _value: Balance) -> Result<(), NPSError> {
+            unimplemented!("unbond_and_unstake not implemented")
+        }
+
+        #[ink(message)]
         pub fn unbond_and_unstake(&mut self, _value: Balance) -> Result<(), NPSError> {
             unimplemented!("unbond_and_unstake not implemented")
         }
@@ -164,6 +174,50 @@ pub mod issuer_staker {
             _value: Balance,
         ) -> Result<(), crate::NPSError> {
             unimplemented!("nomination_transfer not implemented")
+        }
+
+        // Calculate the amount of liquid currency converted from staking currency by current
+		// exchange rate.
+		fn convert_staking_to_liquid(&self, staking_amount: Balance) -> Result<Balance, NPSError> {
+			self.current_exchange_rate()
+                .reciprocal()
+                .unwrap_or(FixedU128::from(self.exchange_rate))
+				.checked_mul_int(staking_amount)
+				.ok_or(NPSError::UnknownError)
+		}
+
+        fn convert_liquid_to_staking(&self, liquid_amount: Balance) -> Result<Balance, NPSError> {
+            self.current_exchange_rate()
+                .checked_mul_int(liquid_amount)
+                .ok_or(NPSError::UnknownError)
+        }
+
+        fn current_exchange_rate(&self) -> FixedU128 {
+			let total_staking = self.total_staking_currency();
+			let total_liquid = self.total_issued_liquid_currency();
+
+            let default_exchange_rate = FixedU128::saturating_from_rational(1, self.exchange_rate);
+			if total_liquid == 0 {
+				default_exchange_rate
+			} else {
+                FixedU128::checked_from_rational(total_staking, total_liquid).unwrap_or(default_exchange_rate)
+			}
+		}
+
+        pub fn total_staking_currency(&self) -> Balance {
+            AssetsExtension::total_supply(self.asset_id)
+        }
+
+        pub fn total_issued_liquid_currency(&self) -> Balance {
+            AssetsExtension::total_supply(self.liquid_asset_id)
+        }
+
+        pub fn staking_balance_of(&self, account: AccountId) -> Balance {
+            AssetsExtension::balance_of(self.asset_id, account)
+        }
+
+        pub fn liquid_balance_of(&self, account: AccountId) -> Balance {
+            AssetsExtension::balance_of(self.liquid_asset_id, account)
         }
     }
 

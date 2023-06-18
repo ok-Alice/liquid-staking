@@ -27,6 +27,8 @@ sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0
     "disable_oom",
     "disable_allocator",
 ] }
+assets_extension = {  git = "https://github.com/swanky-dapps/chain-extension-contracts", default-features = false }
+sp-arithmetic = { version = "16.0.0", default-features = false }
 
 nomination-pool-staking-chain-extension-types = { path = "../../../astar-frame/chain-extensions/types/nomination-pool-staking", default-features = false }
 
@@ -45,6 +47,7 @@ std = [
     "scale-info/std",
     "openbrush/std",
     "nomination-pool-staking-chain-extension-types/std",
+    "assets_extension/std",
 ]
 ink-as-dependency = []
 e2e-tests = []
