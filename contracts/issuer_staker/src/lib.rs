@@ -1,11 +1,12 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 #![feature(min_specialization)]
 
+use scale::{Decode, Encode};
 #[openbrush::contract]
 pub mod issuer_staker {
-    use nomination_pool_staking_chain_extension_types::NPSError;
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode, MaxEncodedLen};
+    use crate::NPSError;
 
     #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode, MaxEncodedLen)]
     struct NominationPoolStakingValueInput<Balance> {
@@ -113,7 +114,7 @@ pub mod issuer_staker {
         }
 
         #[ink(message, payable)]
-        #[openbrush::modifiers(when_not_paused)]
+        // #[openbrush::modifiers(when_not_paused)] // TODO: Figure out what it is used for
         pub fn bond_nomination_pool(&mut self) -> Result<(), NPSError> {
             // make sure the caller is recorded as staker
 
@@ -161,7 +162,7 @@ pub mod issuer_staker {
             _origin_contract: AccountId,
             _target_contract: AccountId,
             _value: Balance,
-        ) -> Result<(), NPSError> {
+        ) -> Result<(), crate::NPSError> {
             unimplemented!("nomination_transfer not implemented")
         }
     }
@@ -350,5 +351,27 @@ pub mod issuer_staker {
 
         //     Ok(())
         // }
+    }
+}
+
+#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+#[derive(PartialEq, Eq, Copy, Clone, Encode, Decode, Debug)]
+pub enum NPSError {
+    /// Unknown error
+    UnknownError = 99,
+}
+
+impl ink::env::chain_extension::FromStatusCode for NPSError {
+    fn from_status_code(status_code: u32) -> Result<(), Self> {
+        match status_code {
+            0 => Ok(()),
+            _ =>  Err(Self::UnknownError),
+        }
+    }
+}
+
+impl From<scale::Error> for NPSError {
+    fn from(_: scale::Error) -> Self {
+        NPSError::UnknownError
     }
 }
