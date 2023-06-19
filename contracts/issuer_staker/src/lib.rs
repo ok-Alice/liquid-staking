@@ -23,8 +23,8 @@ pub mod issuer_staker {
         pause: pausable::Data,
         flipped: bool,
         exchange_rate: Balance,
-        asset_id: Balance,
-        liquid_asset_id: Balance,
+        asset_id: u128,
+        liquid_asset_id: u128,
     }
 
     impl IssuerStaker {
@@ -137,13 +137,41 @@ pub mod issuer_staker {
         }
 
         #[ink(message)]
-        pub fn bond_and_stake(&mut self, _value: Balance) -> Result<(), NPSError> {
-            unimplemented!("unbond_and_unstake not implemented")
+        pub fn bond_and_stake(&mut self, amount: Balance) -> Result<(), NPSError> {
+            let caller = self.env().caller();
+
+            if amount == 0 {
+                return Err(NPSError::UnknownError);
+            }
+            // Must approve transfer outside of ink.
+            AssetsExtension::transfer(Origin::Caller, self.asset_id, self.env().account_id(), amount).or_else(|_|
+                Err(NPSError::UnknownError)
+            )?;
+
+            let amount_to_mint = self.convert_staking_to_liquid(amount).or_else(|_|
+                Err(NPSError::UnknownError)
+            )?;
+
+            // TODO: Call nomination pool chain extension here to stake
+    
+            AssetsExtension::mint(Origin::Address, self.liquid_asset_id, caller, amount_to_mint).or_else(|_|
+                Err(NPSError::UnknownError)
+            )?;
+
+            Ok(())
         }
 
         #[ink(message)]
-        pub fn unbond_and_unstake(&mut self, _value: Balance) -> Result<(), NPSError> {
-            unimplemented!("unbond_and_unstake not implemented")
+        pub fn unbond_and_unstake(&mut self, amount: Balance) -> Result<(), NPSError> {
+            let caller = self.env().caller();
+            let amount_to_redeem = self.convert_liquid_to_staking(amount)?;
+
+            AssetsExtension::burn(Origin::Address, self.liquid_asset_id, caller, amount_to_redeem).or_else(|_|
+                Err(NPSError::UnknownError)
+            )?;
+            // TODO: Call unbond in chain extension
+
+            Ok(())
         }
 
         #[ink(message)]
