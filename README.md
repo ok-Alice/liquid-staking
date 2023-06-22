@@ -1,8 +1,8 @@
 # Liquid Staking
 
-The liquid staking project is mostly comprised of smart contracts. At this current time, there is only the `issuer-staker` contract that contains the implementation for issuing liquid tokens based on the users staked Dot and performing operations on our nomination pool through the nomination-pool pallet manually implemented in the Astar node (these methods are exposed through chain extensions).
+The liquid staking project is mostly comprised of smart contracts. At this current time, there is only the `issuer-staker` contract that contains the implementation for issuing liquid tokens based on the users staked Dot and performing operations on our nomination pool through the nomination-pools pallet manually implemented in the Astar node (these methods are exposed through chain extensions).
 
-The nomination-pool pallet will execute an XCM transaction to the Polkadot relay chain to stake, unstake, nominate, etc.
+The nomination-pools pallet will execute an XCM transaction to the Polkadot relay chain to stake, unstake, nominate, etc.
 
 ## Local Development
 

@@ -6,6 +6,7 @@ use scale::{Decode, Encode};
 pub mod issuer_staker {
     use crate::NPSError;
     use assets_extension::AssetsExtension;
+    use assets_extension::Origin;
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode, MaxEncodedLen};
     use sp_arithmetic::{FixedPointNumber, FixedU128};
@@ -144,19 +145,27 @@ pub mod issuer_staker {
                 return Err(NPSError::UnknownError);
             }
             // Must approve transfer outside of ink.
-            AssetsExtension::transfer(Origin::Caller, self.asset_id, self.env().account_id(), amount).or_else(|_|
-                Err(NPSError::UnknownError)
-            )?;
+            AssetsExtension::transfer(
+                Origin::Caller,
+                self.asset_id,
+                self.env().account_id(),
+                amount,
+            )
+            .or_else(|_| Err(NPSError::UnknownError))?;
 
-            let amount_to_mint = self.convert_staking_to_liquid(amount).or_else(|_|
-                Err(NPSError::UnknownError)
-            )?;
+            let amount_to_mint = self
+                .convert_staking_to_liquid(amount)
+                .or_else(|_| Err(NPSError::UnknownError))?;
 
             // TODO: Call nomination pool chain extension here to stake
-    
-            AssetsExtension::mint(Origin::Address, self.liquid_asset_id, caller, amount_to_mint).or_else(|_|
-                Err(NPSError::UnknownError)
-            )?;
+
+            AssetsExtension::mint(
+                Origin::Address,
+                self.liquid_asset_id,
+                caller,
+                amount_to_mint,
+            )
+            .or_else(|_| Err(NPSError::UnknownError))?;
 
             Ok(())
         }
@@ -166,9 +175,13 @@ pub mod issuer_staker {
             let caller = self.env().caller();
             let amount_to_redeem = self.convert_liquid_to_staking(amount)?;
 
-            AssetsExtension::burn(Origin::Address, self.liquid_asset_id, caller, amount_to_redeem).or_else(|_|
-                Err(NPSError::UnknownError)
-            )?;
+            AssetsExtension::burn(
+                Origin::Address,
+                self.liquid_asset_id,
+                caller,
+                amount_to_redeem,
+            )
+            .or_else(|_| Err(NPSError::UnknownError))?;
             // TODO: Call unbond in chain extension
 
             Ok(())
@@ -180,7 +193,7 @@ pub mod issuer_staker {
         }
 
         #[ink(message)]
-        pub fn claim_dapp(&mut self, _account_id: AccountId, era: u32) -> Result<(), NPSError> {
+        pub fn claim_dapp(&mut self, _account_id: AccountId, _era: u32) -> Result<(), NPSError> {
             unimplemented!("claim_dapp not implemented")
         }
 
