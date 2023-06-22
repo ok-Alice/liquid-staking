@@ -12,7 +12,7 @@ The Ok Alice Liquid Staking project will run a [nomination pool](ttps://wiki.pol
 
 1. Create a [nominator](https://wiki.polkadot.network/docs/learn-nominator) account which will be controlled by the Ok Alice team to perfrom manual operations such as nominating validators.
 
-2. A WASM Ink! smart-contract that will automatically nominate validators based on a selection strategy.
+2. A WASM Ink! smart-contract that will automatically nominate validators based on a **selection strategy**.
 
 ## Decision
 
@@ -20,7 +20,7 @@ We chose the latter. A WASM Ink! smart-contract will be called [`validator_selec
 
 The validator selector will require validator KPIs/statistics from the Polkadot relay chain in order to choose a proper validator.
 
-Based on the KPIs outlined below, the contract will evaluate them according to the following strategy:
+Based on the KPIs outlined below, the contract will evaluate them according to the following **selection strategy**:
 
 1. Every KPI will have a valid statistical range. Validators with KPIs outside this range are not included in the list sent to the oracle (e.g. The percentage volume of DOT invested by the validator must be a minimum of 25%.).
 
