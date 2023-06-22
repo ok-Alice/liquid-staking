@@ -48,4 +48,4 @@ Node configuration & status:
 
 ## Consequences
 
-This implementation will require an off-chain script that will automatically query and push validator statics to an oracle contract which will then be queried by the validator selector.
+This implementation will require an off-chain script that will automatically query and push validator statistics to an oracle contract which will then be queried by the validator selector.
