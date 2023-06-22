@@ -2,7 +2,7 @@
 #![feature(min_specialization)]
 
 #[openbrush::contract]
-pub mod validator_selector_standard {
+pub mod validator_selector {
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode, MaxEncodedLen};
 
@@ -16,7 +16,7 @@ pub mod validator_selector_standard {
 
     #[ink(storage)]
     #[derive(Storage)]
-    pub struct ValidatorSelectorStandard {
+    pub struct ValidatorSelector {
         oracle_validators: OracleValidatorsRef,
 
         #[storage_field]
@@ -24,7 +24,7 @@ pub mod validator_selector_standard {
         flipped: bool,
     }
 
-    impl ValidatorSelectorStandard {
+    impl ValidatorSelector {
         #[ink(constructor)]
         pub fn new(oracle_validators: OracleValidatorsRef) -> Self {
             Self {
@@ -50,14 +50,14 @@ pub mod validator_selector_standard {
         }
     }
 
-    impl Pausable for ValidatorSelectorStandard {
+    impl Pausable for ValidatorSelector {
         #[ink(message)]
         fn paused(&self) -> bool {
             self.pause.paused()
         }
     }
 
-    impl ValidatorSelectorStandard {
+    impl ValidatorSelector {
         #[ink(message)]
         #[openbrush::modifiers(when_not_paused)]
         pub fn select_validator(&mut self) -> Result<u32, PausableError> {
@@ -81,7 +81,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,
@@ -101,7 +101,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,
@@ -121,7 +121,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,
@@ -141,7 +141,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,
@@ -165,7 +165,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,
@@ -186,7 +186,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,
@@ -211,7 +211,7 @@ pub mod validator_selector_standard {
             let constructor = ContractRef::new();
             let address = client
                 .instantiate(
-                    "validator_selector_standard",
+                    "validator_selector",
                     &ink_e2e::alice(),
                     constructor,
                     0,

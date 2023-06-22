@@ -1,5 +1,5 @@
 [package]
-name = "validator_selector_standard"
+name = "validator_selector"
 version = "1.0.0"
 authors = ["Snowmead <michael.assaf.edge@gmail.com>"]
 edition = "2021"
@@ -38,7 +38,7 @@ nomination-pool-staking-chain-extension-types = { path = "../../../astar-frame/c
 ink_e2e = "4.2.0"
 
 [lib]
-name = "validator_selector_standard"
+name = "validator_selector"
 path = "src/lib.rs"
 
 [features]

@@ -1,6 +1,6 @@
 # Liquid Staking
 
-The liquid staking project is mostly comprised of smart contracts. At this current time, there is only the `issuer-staker` contract that contains the implementation for issuing liquid tokens based on the users staked Dot and performing operations on our nomination pool through the nomination-pool pallet manually implemented in the Astar node (these methods are exposed through chain extensions). 
+The liquid staking project is mostly comprised of smart contracts. At this current time, there is only the `issuer-staker` contract that contains the implementation for issuing liquid tokens based on the users staked Dot and performing operations on our nomination pool through the nomination-pool pallet manually implemented in the Astar node (these methods are exposed through chain extensions).
 
 The nomination-pool pallet will execute an XCM transaction to the Polkadot relay chain to stake, unstake, nominate, etc.
 
@@ -8,7 +8,7 @@ The nomination-pool pallet will execute an XCM transaction to the Polkadot relay
 
 ### Zombienet Setup
 
-Before you do anything, follow the steps to setup a local environment of parachain and relay chain. 
+Before you do anything, follow the steps to setup a local environment of parachain and relay chain.
 You will need this to test the contracts that rely on chain extensions added to the [Astar](https://github.com/ok-Alice/Astar) node.
 
 1. Download the latest binary from [polkadot](https://github.com/paritytech/polkadot/releases) or clone the repository and build it manually using `cargo build --release`
@@ -26,5 +26,5 @@ Now you can build and deploy the necessary contracts for liquid staking.
    You will receive the respective `.contract` bundles for all the smart contracts in the `target/ink/` folder:
    - `target/ink/issuer_staker/issuer_staker.contract`
    - `target/ink/issuer_staker/oracle-validators.contract`
-   - `target/ink/issuer_staker/validator_selector_standard.contract`
-2. Upload the `.contract` bundles to the chain and instantiate 
+   - `target/ink/issuer_staker/validator_selector.contract`
+2. Upload the `.contract` bundles to the chain and instantiate
