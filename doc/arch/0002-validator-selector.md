@@ -16,7 +16,7 @@ The Ok Alice Liquid Staking project will run a [nomination pool](ttps://wiki.pol
 
 ## Decision
 
-We chose the latter. A WASM Ink! smart-contract will be called `validator_selector` which will act on behalf of the nominator account in the nomination pool.
+We chose the latter. A WASM Ink! smart-contract will be called [`validator_selector`](../../contracts/validator_selector/) which will act on behalf of the nominator account in the nomination pool.
 
 The validator selector will require validator KPIs/statistics from the Polkadot relay chain in order to choose a proper validator.
 
@@ -34,15 +34,15 @@ This is not an exhaustive list at this moment and is subject to change over time
 
 Reputation of node:
 
-- Uptime: perce
-- Regular payout frequency
 - Era points
+- Uptime: percentage of number of eras a validator was a candidate
+- Regular payout frequency
 
 Node configuration & status:
 
 - Commission rate
 - Validation volume
-- Number of nominators #1
+- Number of nominators
 - Minimum staking amount (Oversubscribed)
 - Verified account
 
