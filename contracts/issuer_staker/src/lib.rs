@@ -121,7 +121,7 @@ pub mod issuer_staker {
 
         #[ink(message, payable)]
         // #[openbrush::modifiers(when_not_paused)] // TODO: Figure out what it is used for
-        pub fn bond_nomination_pool(&mut self) -> Result<(), NPSError> {
+        pub fn create_nomination_pool(&mut self) -> Result<(), NPSError> {
             // make sure the caller is recorded as staker
 
             let contract = self.env().account_id();
@@ -130,7 +130,7 @@ pub mod issuer_staker {
                 contract: contract.encode().try_into().unwrap(),
                 value,
             };
-            ::ink::env::chain_extension::ChainExtensionMethod::build(0x10001)
+            ::ink::env::chain_extension::ChainExtensionMethod::build(0001u32)
                 .input::<NominationPoolStakingValueInput<Balance>>()
                 .output::<(), false>()
                 .handle_error_code::<NPSError>()
@@ -450,9 +450,13 @@ pub mod issuer_staker {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Encode, Decode)]
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-#[derive(PartialEq, Eq, Copy, Clone, Encode, Decode, Debug)]
 pub enum NPSError {
+    /// Success
+    Success = 0,
+    /// Not enough balance
+    NotEnoughBalance = 1,
     /// Unknown error
     UnknownError = 99,
 }
@@ -461,13 +465,8 @@ impl ink::env::chain_extension::FromStatusCode for NPSError {
     fn from_status_code(status_code: u32) -> Result<(), Self> {
         match status_code {
             0 => Ok(()),
-            _ => Err(Self::UnknownError),
+            1 => Err(NPSError::NotEnoughBalance),
+            _ => Err(NPSError::UnknownError),
         }
-    }
-}
-
-impl From<scale::Error> for NPSError {
-    fn from(_: scale::Error) -> Self {
-        NPSError::UnknownError
     }
 }
