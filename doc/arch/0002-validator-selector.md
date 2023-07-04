@@ -36,7 +36,6 @@ Reputation of node:
 
 - Era points
 - Uptime: percentage of number of eras a validator was a candidate
-- Regular payout frequency
 
 Node configuration & status:
 
