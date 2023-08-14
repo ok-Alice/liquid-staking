@@ -18,6 +18,8 @@ Two different off-chain scripts will be developed to perform the necessary opera
 - **List of candidates:** querying of archiving node and select list of validators, publish to oracle
 - **Validator blacklist:** listen to slashing events and publish to oracle
 
+The reason two different scripts are used is for reasons of transparancy.
+
 ### List of candidates
 
 | Tunable Parameter | Comment | Value |
