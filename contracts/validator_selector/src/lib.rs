@@ -6,7 +6,8 @@
 pub mod validator_selector {
     use openbrush::{contracts::pausable::*, traits::Storage};
     use scale::{Decode, Encode};
-
+    use ink::prelude::vec::Vec;
+    
     use oracle_validators::OracleValidatorsRef;
 
     #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode)]
@@ -61,8 +62,8 @@ pub mod validator_selector {
     impl ValidatorSelector {
         #[ink(message)]
         #[openbrush::modifiers(when_not_paused)]
-        pub fn select_validator(&mut self) -> Result<u32, PausableError> {
-            Ok(self.oracle_validators.get_validators())
+        pub fn select_validator(&mut self) -> Result<Vec<(AccountId, u32, Balance)>, PausableError> {
+            Ok(self.oracle_validators.get())
         }
     }
 

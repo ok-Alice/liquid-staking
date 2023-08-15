@@ -24,8 +24,6 @@ oracle_validators = { path = "../oracle_validators", default-features = false, f
     "ink-as-dependency",
 ] }
 
-#nomination-pools-staking-chain-extension-types = { path = "../../../Astar/chain-extensions/types/nomination-pools-staking", default-features = false }
-
 [dev-dependencies]
 ink_e2e = "4.2.1"
 
@@ -41,7 +39,6 @@ std = [
     "scale-info/std",
     "openbrush/std",
     "oracle_validators/std",
-#    "nomination-pools-staking-chain-extension-types/std",
 ]
 ink-as-dependency = []
 e2e-tests = []
