@@ -1,4 +1,4 @@
-#![cfg_attr(not(feature = "std"), no_std)]
+#![cfg_attr(not(feature = "std"), no_std, no_main)]
 #![feature(min_specialization)]
 
 pub use self::oracle_validators::{OracleValidators, OracleValidatorsRef};
@@ -14,6 +14,14 @@ pub mod oracle_validators {
     /// Emitted when storage is set
     #[ink(event)]
     pub struct SetStorage {
+	/// Number of validators in update
+	#[ink(topic)]
+	num: u16,
+    }
+
+    /// Emitted when storage is appended
+    #[ink(event)]
+    pub struct AppendStorage {
 	/// Number of validators in update
 	#[ink(topic)]
 	num: u16,
@@ -91,6 +99,27 @@ pub mod oracle_validators {
 	    Ok(())
 	}
 
+	/// Appends to the current storage
+	#[ink(message)]
+	pub fn append(&mut self,
+		   new: Vec<(AccountId, EraEMA, TotalBonded)>,
+	) -> Result<()> {
+	    let caller = Self::env().caller();
+
+	    if caller != self.owner {
+		return Err(Error::CallerNotOwner)
+	    }
+
+	    let num = new.len() as u16;
+	    self.current.extend(new);
+
+	    self.env().emit_event( AppendStorage {
+		num,
+	    });
+	    
+	    Ok(())
+	}
+	
 	/// Changes current owner to new or invalid AccountId
 	#[ink(message)]
 	pub fn new_owner(&mut self,

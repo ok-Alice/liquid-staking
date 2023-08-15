@@ -1,11 +1,11 @@
 {
   "source": {
-    "hash": "0x091cff7e30bfb060b6579f1a7be5eb41b1c3142cb2cb6be9683b99469dad74af",
+    "hash": "0x7832c08d3fa4e7dc7f36a6dff6f007935574ee7d2177cc556031f08d62e2f8b0",
     "language": "ink! 4.2.1",
     "compiler": "rustc 1.69.0-nightly",
     "build_info": {
       "build_mode": "Release",
-      "cargo_contract_version": "2.2.1",
+      "cargo_contract_version": "3.0.1",
       "rust_toolchain": "nightly-x86_64-unknown-linux-gnu",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
@@ -105,6 +105,27 @@
       {
         "args": [
           {
+            "docs": [
+              " Number of validators in update"
+            ],
+            "indexed": true,
+            "label": "num",
+            "type": {
+              "displayName": [
+                "u16"
+              ],
+              "type": 14
+            }
+          }
+        ],
+        "docs": [
+          "Emitted when storage is appended"
+        ],
+        "label": "AppendStorage"
+      },
+      {
+        "args": [
+          {
             "docs": [],
             "indexed": true,
             "label": "new_owner",
@@ -186,6 +207,34 @@
           "type": 11
         },
         "selector": "0xe8c45eb6"
+      },
+      {
+        "args": [
+          {
+            "label": "new",
+            "type": {
+              "displayName": [
+                "Vec"
+              ],
+              "type": 0
+            }
+          }
+        ],
+        "default": false,
+        "docs": [
+          " Appends to the current storage"
+        ],
+        "label": "append",
+        "mutates": true,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 11
+        },
+        "selector": "0x1acfda38"
       },
       {
         "args": [
