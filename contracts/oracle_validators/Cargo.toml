@@ -5,7 +5,7 @@ authors = ["Snowmead <michael.assaf.edge@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.2.0", default-features = false }
+ink = { version = "4.2.1", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3.5", default-features = false, features = [
     "derive",
@@ -15,13 +15,13 @@ scale-info = { version = "2.5", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-openbrush = { git = "https://github.com/727-Ventures/openbrush-contracts", version = "~3.1.1", default-features = false, features = [
+openbrush = { git = "https://github.com/Brushfam/openbrush-contracts", version = "4.0.0-beta", default-features = false, features = [
     "pausable",
     "psp22",
 ] }
 
 [dev-dependencies]
-ink_e2e = "4.2.0"
+ink_e2e = "4.2.1"
 
 [lib]
 name = "oracle_validators"
