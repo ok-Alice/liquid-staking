@@ -2,6 +2,8 @@
 #![feature(min_specialization)]
 
 use scale::{Decode, Encode};
+
+#[openbrush::implementation(Pausable)]
 #[openbrush::contract]
 pub mod issuer_staker {
     use crate::NPSError;
@@ -43,17 +45,17 @@ pub mod issuer_staker {
 
         #[ink(message)]
         pub fn pause(&mut self) -> Result<(), PausableError> {
-            self._pause()
+            Internal::_pause(self)
         }
 
         #[ink(message)]
         pub fn unpause(&mut self) -> Result<(), PausableError> {
-            self._unpause()
+            Internal::_unpause(self)
         }
 
         #[ink(message)]
         pub fn change_state(&mut self) -> Result<(), PausableError> {
-            self._switch_pause()
+            Internal::_switch_pause(self)
         }
 
         /// Modifies the code which is used to execute calls to this contract address
@@ -72,12 +74,12 @@ pub mod issuer_staker {
         }
     }
 
-    impl Pausable for IssuerStaker {
-        #[ink(message)]
-        fn paused(&self) -> bool {
-            self.pause.paused()
-        }
-    }
+    // impl Pausable for IssuerStaker {
+    //     #[ink(message)]
+    //     fn paused(&self) -> bool {
+    //         self.pause.paused
+    //     }
+    // }
 
     impl IssuerStaker {
         #[ink(message)]

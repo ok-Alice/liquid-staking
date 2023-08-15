@@ -1,14 +1,15 @@
 #![cfg_attr(not(feature = "std"), no_std, no_main)]
 #![feature(min_specialization)]
 
+#[openbrush::implementation(Pausable)]
 #[openbrush::contract]
 pub mod validator_selector {
     use openbrush::{contracts::pausable::*, traits::Storage};
-    use scale::{Decode, Encode, MaxEncodedLen};
+    use scale::{Decode, Encode};
 
     use oracle_validators::OracleValidatorsRef;
 
-    #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode, MaxEncodedLen)]
+    #[derive(Debug, Copy, Clone, PartialEq, Eq, Encode, Decode)]
     struct NominationPoolStakingValueInput<Balance> {
         pub contract: [u8; 32],
         pub value: Balance,
@@ -36,26 +37,26 @@ pub mod validator_selector {
 
         #[ink(message)]
         pub fn pause(&mut self) -> Result<(), PausableError> {
-            self._pause()
+            Internal::_pause(self)
         }
 
         #[ink(message)]
         pub fn unpause(&mut self) -> Result<(), PausableError> {
-            self._unpause()
+            Internal::_unpause(self)
         }
 
         #[ink(message)]
         pub fn change_state(&mut self) -> Result<(), PausableError> {
-            self._switch_pause()
+            Internal::_switch_pause(self)
         }
     }
 
-    impl Pausable for ValidatorSelector {
-        #[ink(message)]
-        fn paused(&self) -> bool {
-            self.pause.paused()
-        }
-    }
+    // impl Pausable for ValidatorSelector {
+    //     #[ink(message)]
+    //     fn paused(&self) -> bool {
+    //         self.pause.paused()
+    //     }
+    // }
 
     impl ValidatorSelector {
         #[ink(message)]

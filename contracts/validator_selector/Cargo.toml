@@ -5,7 +5,7 @@ authors = ["Snowmead <michael.assaf.edge@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.2.0", default-features = false }
+ink = { version = "4.2.1", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3.5", default-features = false, features = [
     "derive",
@@ -15,19 +15,19 @@ scale-info = { version = "2.5", default-features = false, features = [
 ], optional = true }
 
 # These dependencies
-openbrush = { git = "https://github.com/727-Ventures/openbrush-contracts", version = "~3.1.1", default-features = false, features = [
+openbrush = { git = "https://github.com/Brushfam/openbrush-contracts", version = "4.0.0-beta", default-features = false, features = [
     "pausable",
     "psp22",
 ] }
 
-oracle_validators = { path = "../oracle-validators", default-features = false, features = [
+oracle_validators = { path = "../oracle_validators", default-features = false, features = [
     "ink-as-dependency",
 ] }
 
-nomination-pools-staking-chain-extension-types = { path = "../../../Astar/chain-extensions/types/nomination-pools-staking", default-features = false }
+#nomination-pools-staking-chain-extension-types = { path = "../../../Astar/chain-extensions/types/nomination-pools-staking", default-features = false }
 
 [dev-dependencies]
-ink_e2e = "4.2.0"
+ink_e2e = "4.2.1"
 
 [lib]
 name = "validator_selector"
@@ -41,7 +41,7 @@ std = [
     "scale-info/std",
     "openbrush/std",
     "oracle_validators/std",
-    "nomination-pools-staking-chain-extension-types/std",
+#    "nomination-pools-staking-chain-extension-types/std",
 ]
 ink-as-dependency = []
 e2e-tests = []
