@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Validator Selector Debugging",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder}/validator-selector/lib/main.js",
+        "outFiles": ["${workspaceFolder}/validator-selector/lib/**/*.js"],
+        "args": ["--chain polkadot"],
+        "sourceMaps": true
+      }
+    ]
+  }
