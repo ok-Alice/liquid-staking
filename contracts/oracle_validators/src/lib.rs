@@ -203,6 +203,30 @@ pub mod oracle_validators {
 	}
 
 	#[ink::test]
+	fn append_works() {
+	    let accounts = default_accounts();
+
+	    set_next_caller(accounts.alice);
+
+	    let mut contract = OracleValidators::new();
+
+	    let test_data1 : Vec<(AccountId, EraEMA, TotalBonded)>
+		= vec![ ( accounts.alice, 123, 123 )];
+
+	    assert_eq!(contract.set(test_data1), Ok(()));
+            assert_eq!(test::recorded_events().count(), 2);
+	    
+	    let test_data2 : Vec<(AccountId, EraEMA, TotalBonded)>
+		= vec! [ (accounts.bob, 321, 321) ];
+
+	    assert_eq!(contract.append(test_data2), Ok(()));
+	    assert_eq!(test::recorded_events().count(), 3);
+
+	    let tset_data = contract.get();
+	    assert_eq!(tset_data[1].0, accounts.bob);
+	}
+	
+	#[ink::test]
 	fn new_owner_works() {
 	    let accounts = default_accounts();
 
@@ -224,4 +248,28 @@ pub mod oracle_validators {
 	}
     }
 
+    #[cfg(all(test, feature = "e2e-tests"))]
+    mod e2e_tests {
+        use super::*;
+        use ink_e2e::build_message;
+
+        type E2EResult<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+
+        #[ink_e2e::test]
+        async fn it_works(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+	    let constructor = OracleValidatorsRef::new();
+	    let contract_acc_id = client
+		.instantiate("oracle", &ink_e2e::alice(), constructor, 0, None)
+		.await
+		.expect("instantiate failed")
+		.account_id;
+
+	    let get = build_message::<OracleValidatorsRef>(contract_acc_id.clone())
+		.call(|oracle| oracle.get());
+	    let get_res = client.call_dry_run(&ink_e2e::bob(), &get, 0, None).await;
+	    assert_eq!(get_res.exec_result.result.unwrap().data.len(), 0);
+
+	    Ok(())
+	}
+    }
 }
