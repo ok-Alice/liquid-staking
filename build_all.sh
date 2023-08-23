@@ -2,9 +2,9 @@
 
 set -eu
 
-for contract in oracle_validators issuer_staker validator_selector; do
-    cargo +nightly-2023-02-07 contract build --manifest-path contracts/${contract}/Cargo.toml --release
+for contract in $(ls contracts); do
+    cargo +nightly-2023-03-21 contract build --manifest-path contracts/${contract}/Cargo.toml --release
 
-    cp -f target/ink/${contract}/${contract}.{contract,json} artefacts
+    cp -f target/ink/${contract}/${contract}.contract target/ink/${contract}/${contract}.json artefacts
 done
 
