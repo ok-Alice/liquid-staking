@@ -1,0 +1,15 @@
+services:
+  zombienet:
+    build:
+      context: .
+      dockerfile: Dockerfile.zombienet
+    ports:
+      - "9944:9944"
+  deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy
+    volumes:
+      - ./artefacts:/root/src/liquid-staking/artefacts
+    depends_on:
+      - zombienet

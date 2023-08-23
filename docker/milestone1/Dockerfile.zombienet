@@ -1,0 +1,23 @@
+FROM docker.io/library/debian:stable-slim
+
+# metadata
+LABEL dev.okalice.image.authors="wouter@okalice.dev" \
+    dev.okalice.image.vendor="okAlice" \
+    dev.okalice.image.description="Milestone 1 - Zombienet"
+
+EXPOSE 9944 9945 9946
+
+
+RUN useradd -ms /bin/bash okalice
+RUN apt-get -qq update && apt-get -qq install -y curl && apt-get -qq install -y ssh
+
+COPY scripts/single_parachain.toml /tmp
+COPY scripts/functions.sh /tmp
+COPY scripts/install-zombienet.sh /tmp
+
+USER okalice
+RUN /tmp/install-zombienet.sh
+ENV PATH=$PATH:/home/okalice/bin
+ENTRYPOINT [ "zombienet-linux-x64", "-p", "native", "spawn", "/tmp/single_parachain.toml" ]
+
+
