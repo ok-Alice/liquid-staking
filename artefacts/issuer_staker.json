@@ -1,11 +1,11 @@
 {
   "source": {
-    "hash": "0x018c7e836205ea33d2fa5d7658e17363a5d76d1f9c4aecb77745dad178ffe413",
-    "language": "ink! 4.2.1",
-    "compiler": "rustc 1.69.0-nightly",
+    "hash": "0xf0092bbaca983fa4faa9c626e91d188bf243b165aa22726a0ead93f7f5c672ab",
+    "language": "ink! 4.3.0",
+    "compiler": "rustc 1.70.0-nightly",
     "build_info": {
       "build_mode": "Release",
-      "cargo_contract_version": "2.2.1",
+      "cargo_contract_version": "3.0.1",
       "rust_toolchain": "nightly-x86_64-unknown-linux-gnu",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
@@ -20,6 +20,7 @@
       "Snowmead <michael.assaf.edge@gmail.com>"
     ]
   },
+  "image": null,
   "spec": {
     "constructors": [
       {
