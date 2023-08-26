@@ -9,9 +9,11 @@ cd src/liquid-staking
 ./build_all.sh
 
 CONTRACT_ADDRESS_ORACLE=$(cargo contract instantiate --manifest-path=contracts/oracle_validators/Cargo.toml --url ws://zombienet:9944 --suri //Alice  --skip-confirm -x |  grep 'Contract ' | cut -f6 -d\  )
+echo 
 echo "Oracle deployed at $CONTRACT_ADDRESS_ORACLE"
 
 CONTRACT_ADDRESS_VALIDATORSELECTOR=$(cargo contract instantiate --manifest-path=contracts/validator_selector/Cargo.toml --url ws://zombienet:9944 --suri //Alice  --constructor new --args $CONTRACT_ADDRESS_ORACLE --skip-confirm -x |  grep 'Contract ' | cut -f6 -d\  )
+echo
 echo "Validator selector deployed at: $CONTRACT_ADDRESS_VALIDATORSELECTOR"
 
 
@@ -26,4 +28,5 @@ echo
 echo "-------------------------------------------"
 echo "Deploy complete!"
 echo "Oracle_validators contract:   $CONTRACT_ADDRESS_ORACLE"
+echo "    + added 250 entries"
 echo "Validator_selectors contract: $CONTRACT_ADDRESS_VALIDATORSELECTOR"
