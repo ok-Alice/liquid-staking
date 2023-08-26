@@ -5,7 +5,7 @@ authors = ["Snowmead <michael.assaf.edge@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "4.2.1", default-features = false }
+ink = { version = "4.3.0", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = [
     "derive",
@@ -20,20 +20,23 @@ openbrush = { git = "https://github.com/Brushfam/openbrush-contracts", version =
     "psp22",
 ] }
 
+
+# Zabuxx: commented this as no longer needed? (26/8)
 # This is a workaround to avoid any global_allocator conflicts
 # https://substrate.stackexchange.com/questions/4733/error-when-compiling-a-contract-using-the-xcm-chain-extension/5767#5767
-sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.39", default-features = false, features = [
-    "disable_panic_handler",
-    "disable_oom",
-    "disable_allocator",
-] }
+# sp-io = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.39", default-features = false, features = [
+#     "disable_panic_handler",
+#     "disable_oom",
+#     "disable_allocator",
+# ] }
+
 assets_extension = { git = "https://github.com/swanky-dapps/chain-extension-contracts", default-features = false }
 sp-arithmetic = { version = "16.0.0", default-features = false }
 
 nomination-pools-staking-chain-extension-types = { path = "../../../Astar/chain-extensions/types/nomination-pools-staking", default-features = false }
 
 [dev-dependencies]
-ink_e2e = "4.2.1"
+ink_e2e = "4.3.0"
 
 [lib]
 name = "issuer_staker"
