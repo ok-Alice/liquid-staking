@@ -1,5 +1,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
+// eslint-disable-next-line node/no-extraneous-import
 import { ValidatorPrefs } from '@polkadot/types/interfaces';
+// eslint-disable-next-line node/no-extraneous-import
 import { PalletStakingEraRewardPoints } from '@polkadot/types/lookup';
 import { BN } from '@polkadot/util';
 
@@ -93,7 +95,7 @@ function calculate_ema(data: number[]): number {
     ema = alpha * data[i] + (1 - alpha) * ema;
   }
 
-  return ema;
+  return Math.round(ema);
 }
 
 async function setValidatorsBondedTokens(
@@ -112,7 +114,7 @@ async function setValidatorsBondedTokens(
   );
 }
 
-export default async function init(chainInfo: ChainInfo) {
+export default async function getValidators(chainInfo: ChainInfo) {
   const api = await connect(chainInfo);
   const eras = await getEras(api);
 

@@ -2,7 +2,8 @@
 import '@polkadot/api-augment/substrate';
 
 import config from './config';
-import init from './validators';
+import getValidators from './validators';
+import sendValidators from './oracle';
 
 // UNCOMMENT FOR PRODUCTION
 // import { Command } from 'commander';
@@ -19,21 +20,10 @@ import init from './validators';
 // UNCOMMENT FOR DEBUGGING VSCODE
 const chainInfo = config.chains['polkadot'];
 
-void init(chainInfo)
-  .then(validators => {
-    // pretty print each validator with keys. convert BN to string
-    validators.forEach(validator => {
-      console.log(
-        JSON.stringify(
-          {
-            ...validator,
-            bonded: validator.bonded.toString(),
-          },
-          null,
-          2
-        )
-      );
-    });
-  })
-  // eslint-disable-next-line no-process-exit
-  .finally(() => process.exit());
+void (async function () {
+  // get validators from chain
+  const validators = await getValidators(chainInfo);
+
+  // send validators to oracle
+  await sendValidators(config.oracle, validators);
+})();
