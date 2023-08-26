@@ -40,7 +40,7 @@ From the list of active validators, only select those with *max_commission* or l
 
 #### 3. Calculate EMA
 
-For the list of validators with acceptable commission rate, calculate the EMA over the last *historical_eras* period. An example implementation is available in *proof-of-concepts/validator-statistics/src/[parse-era-points.py](http://parse-era-points.py/)* 
+For the list of validators with acceptable commission rate, calculate the EMA of earned **Era points** over the last *historical_eras* period. An example implementation is available in *proof-of-concepts/validator-statistics/src/[parse-era-points.py](http://parse-era-points.py/)* 
 
 #### 4. Publish to oracle
 
