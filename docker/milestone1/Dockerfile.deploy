@@ -1,7 +1,7 @@
 FROM docker.io/paritytech/contracts-ci-linux:latest
 
 # metadata
-LABEL dev.okalice.image.authors="wouter@okalice.dev" \
+LABEL dev.okalice.image.authors="Zabuxx" \
     dev.okalice.image.vendor="okAlice" \
     dev.okalice.image.description="Milestone 1 - Deploy"
 

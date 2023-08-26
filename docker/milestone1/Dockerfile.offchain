@@ -1,0 +1,19 @@
+FROM ubuntu
+
+LABEL dev.okalice.image.authors="Zabuxx" \
+    dev.okalice.image.vendor="okAlice" \
+    dev.okalice.image.description="Milestone 1 - OffChain"
+
+RUN apt-get -qq update && apt-get -qq install -y curl
+RUN bash -c 'curl -s https://deb.nodesource.com/setup_18.x | bash'
+RUN apt-get -qq install -y nodejs gcc g++ make git
+
+COPY scripts/functions.sh /tmp
+COPY scripts/fetch-validator-selector.sh /bin
+
+RUN useradd -ms /bin/bash okalice
+USER okalice
+RUN fetch-validator-selector.sh
+
+
+
