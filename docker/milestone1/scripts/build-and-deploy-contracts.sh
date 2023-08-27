@@ -31,7 +31,7 @@ for contract in $(ls contracts); do
 done
 
 echo
-echo "All contracts available: aiting for zombienet:9944 to become available"
+echo "All contracts available: waiting for zombienet:9944 to become available"
 while ! nc -w5 zombienet 9944; do
     sleep 5
 done
