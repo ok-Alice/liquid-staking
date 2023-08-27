@@ -1,10 +1,20 @@
 services:
+  buildcollator:
+    build:
+      context: .
+      dockerfile: Dockerfile.buildcollator
+    volumes:
+      - ./artefacts:/root/src/liquid-staking/artefacts
   zombienet:
     build:
       context: .
       dockerfile: Dockerfile.zombienet
+    volumes:
+      - ./artefacts:/home/okalice/src/liquid-staking/artefacts
     ports:
       - "9944:9944"
+    depends_on:
+      - buildcollator
   deploy:
     build:
       context: .

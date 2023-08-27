@@ -9,15 +9,18 @@ EXPOSE 9944 9945 9946
 
 
 RUN useradd -ms /bin/bash okalice
-RUN apt-get -qq update && apt-get -qq install -y curl && apt-get -qq install -y ssh
+RUN apt-get -qq update && apt-get -qq install -y curl ssh git
 
 COPY scripts/single_parachain.toml /tmp
 COPY scripts/functions.sh /tmp
 COPY scripts/install-zombienet.sh /tmp
+COPY scripts/fetch-contracts.sh /tmp
+COPY scripts/run-zombienet.sh /bin
 
 USER okalice
+RUN /tmp/fetch-contracts.sh
 RUN /tmp/install-zombienet.sh
 ENV PATH=$PATH:/home/okalice/bin
-ENTRYPOINT [ "zombienet-linux-x64", "-p", "native", "spawn", "/tmp/single_parachain.toml" ]
+ENTRYPOINT [ "run-zombienet.sh" ]
 
 
