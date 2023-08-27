@@ -13,3 +13,11 @@ services:
       - ./artefacts:/root/src/liquid-staking/artefacts
     depends_on:
       - zombienet
+  offchain:
+    build:
+      context: .
+      dockerfile: Dockerfile.offchain
+    volumes:
+      - ./artefacts:/home/okalice/src/liquid-staking/artefacts
+    depends_on:
+      - deploy

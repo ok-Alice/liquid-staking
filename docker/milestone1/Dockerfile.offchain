@@ -10,10 +10,13 @@ RUN apt-get -qq install -y nodejs gcc g++ make git
 
 COPY scripts/functions.sh /tmp
 COPY scripts/fetch-validator-selector.sh /bin
+COPY scripts/run-offchain.sh /bin
 
 RUN useradd -ms /bin/bash okalice
 USER okalice
 RUN fetch-validator-selector.sh
+
+ENTRYPOINT [ "run-offchain.sh" ]
 
 
 
