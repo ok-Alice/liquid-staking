@@ -1,5 +1,9 @@
-// eslint-disable-next-line node/no-extraneous-import
-import { ContractExecResultResult, Weight } from '@polkadot/types/interfaces';
+import {
+  ContractExecResultResult,
+  Weight,
+  AccountId,
+  // eslint-disable-next-line node/no-extraneous-import
+} from '@polkadot/types/interfaces';
 // eslint-disable-next-line node/no-extraneous-import
 import { Codec } from '@polkadot/types/types';
 import { BN } from '@polkadot/util';
@@ -19,6 +23,7 @@ export type OracleInfo = {
 
 export type Validator = {
   address: string;
+  accountId: AccountId;
   commission: number;
   ema: number;
   bonded: BN;

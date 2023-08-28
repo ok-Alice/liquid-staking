@@ -23,4 +23,4 @@ echo "Found artefacts/config.ts"
 
 cp $TARGET validator-selector/src
 
-npx ts-node validator-selector/src/main.ts
+npx ts-node validator-selector/src/main.ts -c polkadot

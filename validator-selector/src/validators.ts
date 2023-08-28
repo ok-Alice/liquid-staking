@@ -20,9 +20,11 @@ async function filterValidators(
   const validators = await Promise.all(
     addresses.map(async address => {
       const prefs = await api.query.staking.validators<ValidatorPrefs>(address);
+      const accountId = api.registry.createType('AccountId', address);
 
       return {
         address,
+        accountId,
         commission: Number(
           (prefs.commission.toHuman() as string).split('%')[0]
         ),

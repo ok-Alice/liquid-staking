@@ -6,24 +6,31 @@ import getValidators from './validators';
 import sendValidators from './oracle';
 
 // UNCOMMENT FOR PRODUCTION
-// import { Command } from 'commander';
-// const program = new Command();
-// program
-//   .name('validator-selector')
-//   .requiredOption('-c, --chain <chain>', 'Substrate chain to connect to')
-//   .parse(process.argv);
+import { Command } from 'commander';
+const program = new Command();
+program
+  .name('validator-selector')
+  .requiredOption('-c, --chain <chain>', 'Substrate chain to connect to')
+  .parse(process.argv);
 
-// const options = program.opts();
-// const chain = options.chain as string;
-// const chainInfo = config.chains[chain];
+const options = program.opts();
+const chain = options.chain as string;
+const chainInfo = config.chains[chain];
 
 // UNCOMMENT FOR DEBUGGING VSCODE
-const chainInfo = config.chains['polkadot'];
+// const chainInfo = config.chains['polkadot'];
 
 void (async function () {
   // get validators from chain
+  console.log(`Getting validators from ${chain}...`);
   const validators = await getValidators(chainInfo);
 
   // send validators to oracle
+  console.log('Sending validators to oracle...');
   await sendValidators(config.oracle, validators);
+
+  // shutdown
+  console.log('Done!');
+  // eslint-disable-next-line no-process-exit
+  process.exit(0);
 })();

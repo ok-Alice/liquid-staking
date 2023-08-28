@@ -67,7 +67,7 @@ export async function sendTransaction(
       const tx = contract.tx[method](options, ...params);
 
       const unsub = await tx.signAndSend(caller, ({ status }) => {
-        console.log(`Current status is ${status.type}`);
+        console.log(`Transaction status: ${status.type}`);
         if (status.isFinalized) {
           unsub();
           resolve();
