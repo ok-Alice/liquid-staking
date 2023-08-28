@@ -1,17 +1,12 @@
-import { ApiPromise, WsProvider } from '@polkadot/api';
-// eslint-disable-next-line node/no-extraneous-import
+/* eslint-disable node/no-extraneous-import */
+import { ApiPromise } from '@polkadot/api';
 import { ValidatorPrefs } from '@polkadot/types/interfaces';
-// eslint-disable-next-line node/no-extraneous-import
 import { PalletStakingEraRewardPoints } from '@polkadot/types/lookup';
 import { BN } from '@polkadot/util';
 
 import { ChainInfo, Era, Validator } from './types';
 import config from './config';
-
-async function connect(chainInfo: ChainInfo): Promise<ApiPromise> {
-  const provider = new WsProvider(chainInfo.websocket);
-  return await ApiPromise.create({ provider: provider });
-}
+import { connect } from './utils';
 
 async function filterValidators(
   api: ApiPromise,
@@ -117,7 +112,7 @@ async function setValidatorsBondedTokens(
 }
 
 export default async function getValidators(chainInfo: ChainInfo) {
-  const api = await connect(chainInfo);
+  const api = await connect(chainInfo.websocket);
   const eras = await getEras(api);
 
   // get validators filtered on maxCommission and maxValidators.

@@ -1,12 +1,12 @@
-import { ApiPromise, WsProvider } from '@polkadot/api';
+/* eslint-disable node/no-extraneous-import */
 import { OracleInfo, Validator } from './types';
 import { Abi, ContractPromise } from '@polkadot/api-contract';
 import { contractQuery, sendTransaction } from './contract';
 import { Keyring } from '@polkadot/api';
-// eslint-disable-next-line node/no-extraneous-import
-import { U128, U32 } from '@polkadot/types';
-// eslint-disable-next-line node/no-extraneous-import
 import { AccountId } from '@polkadot/types/interfaces';
+import { U128, U32 } from '@polkadot/types';
+
+import { connect } from './utils';
 
 type ValidatorTuple = [AccountId, U32, U128];
 
@@ -14,8 +14,7 @@ export default async function sendValidators(
   oracleInfo: OracleInfo,
   validators: Validator[]
 ) {
-  const provider = new WsProvider(oracleInfo.websocket);
-  const api = await ApiPromise.create({ provider });
+  const api = await connect(oracleInfo.websocket);
   const contractAbi: Abi = require(oracleInfo.contractAbi);
   const oracleContract = new ContractPromise(
     api,
@@ -36,12 +35,14 @@ export default async function sendValidators(
     ]
   );
 
-  // send validators in batches of 10, last batch could be less than 50.
-  // wait for each batch to be mined before sending the next batch
-  console.log(`Sending ${convertedToVec.length} validators in batches of 50`);
+  // send validators in batches
 
   const batchSize = 50;
   const batches = Math.ceil(convertedToVec.length / batchSize);
+
+  console.log(
+    `Sending ${convertedToVec.length} validators in batches of ${batchSize}`
+  );
 
   for (let i = 0; i < batches; i += 1) {
     const batch = convertedToVec.slice(i * batchSize, (i + 1) * batchSize);

@@ -1,7 +1,6 @@
+/* eslint-disable node/no-extraneous-import */
 import { ContractPromise } from '@polkadot/api-contract';
-// eslint-disable-next-line node/no-extraneous-import
 import { WeightV2 } from '@polkadot/types/interfaces';
-// eslint-disable-next-line node/no-extraneous-import
 import { Registry } from '@polkadot/types/types';
 import { BN, BN_ONE } from '@polkadot/util';
 import { ContractResponse } from './types';
