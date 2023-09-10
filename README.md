@@ -38,7 +38,7 @@ relay chain via [XCM](https://paritytech.github.io/xcm-docs/). This means smart 
 the pool. Listening to relay chain events and storage changes are also a challenge. We are looking to solve this with an
 oracle today but we are also looking at other solutions
 like [ISMP Substrate](https://github.com/polytope-labs/ismp-substrate) as well as keeping an eye
-on [XCQ]https://forum.polkadot.network/t/xcm-as-a-standard-for-reading-and-interacting-with-parachains/266/19 for
+on [XCQ](https://forum.polkadot.network/t/xcm-as-a-standard-for-reading-and-interacting-with-parachains/266/19) for
 future. There is also an idea of
 an [Interchain Proof Oracle Network](https://forum.polkadot.network/t/interchain-proof-oracle-network/653)
 from [Bryan Chen](https://github.com/xlc) of Acala Network which would be hugely beneficial for this project and many
@@ -50,10 +50,11 @@ others.
 - Substrate [Rust docs](https://paritytech.github.io/substrate/master/substrate/index.html).
 - Astar [parachain](https://github.com/AstarNetwork/Astar).
 - [Forked Astar Node](https://github.com/ok-Alice/Astar) with Nomination Pool Chain Extension.
+- [XCM](https://paritytech.github.io/xcm-docs/).
 
-## Local Development
+# Local Development
 
-### Zombienet Setup
+## Zombienet Setup
 
 Before you do anything, follow the steps to setup a local environment of parachain and relay chain.
 You will need this to test the contracts that rely on chain extensions added to
@@ -74,7 +75,7 @@ the [Astar](https://github.com/ok-Alice/Astar) node.
    the `zombienet` output. You should copy the port from the `collator1` node which is normally shown at the end of the
    output.
 
-### Building & Deploying Contracts
+## Building & Deploying Contracts
 
 Now you can build and deploy the necessary contracts for liquid staking.
 
