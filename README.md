@@ -9,8 +9,8 @@ is [funded](https://github.com/use-inkubator/Ecosystem-Grants/blob/master/applic
 the [ink!ubator Ecosystem Grants](https://github.com/use-inkubator/Ecosystem-Grants) and managed by the OkAlice team.
 It consists of a set of smart contracts that will be deployed on the Astar parachain. The smart contracts will be able
 to manage a nomination pool on the Polkadot Relay Chain with a custom validator selection strategy. You can find the
-scripts for populating the oracle contract with validator statistics in the [scripts](/scripts) folder. The contracts
-are in the [contracts](/contracts) folder.
+nodejs project for populating the oracle contract with validator statistics in
+the [validator-selector](validator-selector) folder. The contracts are in the [contracts](contracts) folder.
 
 # Vision and Motivation
 
@@ -44,7 +44,11 @@ an [Interchain Proof Oracle Network](https://forum.polkadot.network/t/interchain
 from [Bryan Chen](https://github.com/xlc) of Acala Network which would be hugely beneficial for this project and many
 others.
 
-# Resources
+## Architecture
+
+![image](artefacts/assets/liquid-staking-arch.png)
+
+## Resources
 
 - [Ink](https://use.ink/) and their [roadmap](https://github.com/orgs/paritytech/projects/27/views/19).
 - Substrate [Rust docs](https://paritytech.github.io/substrate/master/substrate/index.html).
