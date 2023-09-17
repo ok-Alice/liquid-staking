@@ -2,6 +2,8 @@
 
 # build and deploy the liquid staking Astar Collator
 
+set -e
+
 . /tmp/functions.sh
 
 cd
@@ -19,7 +21,7 @@ else
 fi
 
 cd Astar
-cargo --quiet build --quiet --package astar-collator --release
+cargo build --package astar-collator --release
 
 
 mkdir -p $(dirname ../${TARGET})

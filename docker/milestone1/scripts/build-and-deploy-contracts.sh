@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # build and deploy the liquid staking contracts
 
 . /tmp/functions.sh
@@ -25,7 +27,7 @@ for contract in $(ls contracts); do
 	cp ${CDEST}/${contract}.json ${CDEST}/${contract}.contract target/ink/${contract}
     else
 	echo "Compiling contract $contract"
-	cargo +nightly-2023-03-21 --quiet contract build --quiet --manifest-path contracts/${contract}/Cargo.toml --release
+	cargo +nightly --quiet contract build --quiet --manifest-path contracts/${contract}/Cargo.toml --release
 	cp -f target/ink/${contract}/${contract}.contract target/ink/${contract}/${contract}.json artefacts/contract
     fi
 done
@@ -39,7 +41,14 @@ sleep 5
 echo "Zombienet:9944 available, deploying contracts..."
 
 
-CONTRACT_ADDRESS_ORACLE=$(cargo contract instantiate --manifest-path=contracts/oracle_validators/Cargo.toml --url ws://zombienet:9944 --suri //Alice  --skip-confirm -x |  grep 'Contract ' | cut -f6 -d\  )
+CONTRACT_ADDRESS_ORACLE=$(cargo contract instantiate --manifest-path=contracts/oracle_validators/Cargo.toml --url ws://zombienet:9944 --suri //Alice  --skip-confirm -x |  grep 'Contract ' | cut -f6 -d\  ) 
+
+if [ -z $CONTRACT_ADDRESS_ORACLE ]; then
+    echo "Error getting contract address"
+    exit 1
+fi
+
+
 echo 
 echo "Oracle deployed at $CONTRACT_ADDRESS_ORACLE"
 
@@ -52,7 +61,6 @@ echo
 echo "-------------------------------------------"
 echo "Deploy complete!"
 echo "Oracle_validators contract:   $CONTRACT_ADDRESS_ORACLE"
-echo "    + added 150 entries"
 echo "Validator_selectors contract: $CONTRACT_ADDRESS_VALIDATORSELECTOR"
 
 # create file for offchain container

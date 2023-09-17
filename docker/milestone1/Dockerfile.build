@@ -8,8 +8,8 @@ LABEL dev.okalice.image.authors="Zabuxx" \
 COPY scripts/functions.sh /tmp
 COPY scripts/fetch-contracts.sh /tmp
 COPY scripts/build-and-deploy-collator.sh /bin
+COPY scripts/build-and-deploy-polkadot.sh /bin
 
-RUN apt-get -qq update && apt-get -qq install -y protobuf-compiler librocksdb-dev clang
-
+RUN apt-get -qq update && apt-get -qq install -y protobuf-compiler librocksdb-dev clang build-essential git libclang-dev pkg-config libssl-dev 
 RUN /tmp/fetch-contracts.sh
-ENTRYPOINT [ "build-and-deploy-collator.sh" ]
+

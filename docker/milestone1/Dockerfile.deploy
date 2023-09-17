@@ -1,4 +1,5 @@
-FROM docker.io/paritytech/contracts-ci-linux:latest
+#FROM --platform=linux/amd64 docker.io/paritytech/contracts-ci-linux:latest
+FROM rust
 
 # metadata
 LABEL dev.okalice.image.authors="Zabuxx" \
@@ -7,10 +8,13 @@ LABEL dev.okalice.image.authors="Zabuxx" \
 
 RUN apt-get -qq update && apt-get -qq install -y netcat-openbsd
 COPY scripts/functions.sh /tmp
-COPY scripts/fetch-contracts.sh /tmp
+COPY scripts/fetch-contracts.sh /bin
+COPY scripts/install-cargo-contract.sh /bin
 COPY scripts/build-and-deploy-contracts.sh /bin
 
-RUN /tmp/fetch-contracts.sh
+RUN fetch-contracts.sh
+RUN install-cargo-contract.sh
+
 ENTRYPOINT [ "build-and-deploy-contracts.sh" ]
 
 
