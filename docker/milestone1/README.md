@@ -10,15 +10,23 @@ This will
 
 
 * build the okAlice-Astar collator
+* build the Polkadot node
 * start a relay- and parachain via zombienet with this collator
 * download, compile and deploy the contracts on the parachain
 * start the off-chain validator-selector
 
 After a succesful run you can find:
 
-* The parachain collator at **ws://localhost:9944**
-* The compiled collator in *artefacts/bin*
+
+* The compiled collator and polkadot binaries in *artefacts/bin*
 * The compiled contracts in *artefacts/contract*.
+* Exposed ports:
+    - collator1 at **ws://localhost:9944**
+	- collator2 at **ws://localhost:9945**
+    - alice     at **ws://localhost:9946**
+	- bob       at **ws://localhost:9947**
+* Contracts deployed to collator
+* Oracle populated with live data
 
 The build is opportunistic: when the artefacts are present (in *milestone1/artefacts*) the collator or contracts will not be rebuild. You'll have to remove them manually in between runs to rebuild.
 

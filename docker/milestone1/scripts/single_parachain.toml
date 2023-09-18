@@ -16,6 +16,7 @@ chain = "rococo-local"
   [[relaychain.nodes]]
   name = "bob"
   validator = true
+  ws_port = 9947
 
   [[relaychain.nodes]]
   name = "charlie"

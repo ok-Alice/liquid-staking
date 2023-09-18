@@ -22,6 +22,9 @@ services:
       - ./artefacts:/home/okalice/src/liquid-staking/artefacts
     ports:
       - "9944:9944"
+      - "9945:9945"
+      - "9946:9946"
+      - "9947:9947"
     depends_on:
       - buildcollator
       - buildpolkadot
