@@ -37,14 +37,11 @@ It can be useful to use the *Zombienet Container* standalone for deployment of c
 It can be started with:
 
     $ docker build -f Dockerfile.zombienet -t okalice/milestone1
-	$ docker run -p 9944:9944 -p 9946:9946 okalice/milestone1
+	$ docker run -p 9944:9944 -p 9945:9945 -p 9946:9946 -p 9947:9947 okalice/milestone1
 	
 This will start the *single_parachain.toml* setup as found in *scripts/*. 
 
-After a succesful run
-
-* The relaychain node can be reached at **ws://localhost9946**
-* The parachain collator can be reached at **ws://localhost:9944**
+After a succesful run the same ports as above will be exposed.
 
 
 
