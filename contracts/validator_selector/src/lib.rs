@@ -70,12 +70,12 @@ pub mod validator_selector {
 		return Ok(get_result);
 	    }
 	    
-	    // Select 4 "certitudes" -> highest Era points EMA
+	    // Select 12 "optimals" -> lowest self bond
 	    get_result.sort_by(|a, b| a.2.cmp(&b.2));
 	    let mut result = get_result[0..12].to_vec();
 	    result.drain(0..12);
-	    
-	    // Select 12 "optimals" -> lowest self bond
+
+	    // Select 4 "certitudes" -> highest Era points EMA	    
 	    get_result.sort_by(|a, b| b.1.cmp(&a.1));	    
 	    result.append(&mut get_result[0..4].to_vec());
 	    
