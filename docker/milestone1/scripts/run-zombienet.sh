@@ -24,9 +24,6 @@ echo "   $TARGET1"
 echo "   $TARGET2"
 echo "... launching zombienet"
 
-ls $(dirname $TARGET1)
-
-
 cp $TARGET1 ${TARGET2}* ${HOME}/bin
 
 ARCH=$(uname -m)
