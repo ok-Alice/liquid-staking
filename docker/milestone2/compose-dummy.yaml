@@ -1,0 +1,46 @@
+services:
+  buildcollator:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - ./artefacts:/root/src/liquid-staking/artefacts
+    entrypoint: build-and-deploy-collator.sh
+  buildpolkadot:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - ./artefacts:/root/src/liquid-staking/artefacts
+    entrypoint: build-and-deploy-polkadot.sh      
+  zombienet:
+    hostname: zombienet
+    build:
+      context: .
+      dockerfile: Dockerfile.zombienet
+    volumes:
+      - ./artefacts:/home/okalice/src/liquid-staking/artefacts
+    ports:
+      - "9944:9944"
+      - "9945:9945"
+      - "9946:9946"
+      - "9947:9947"
+    depends_on:
+      - buildcollator
+      - buildpolkadot
+  deploydummy:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploydummy
+    volumes:
+      - ./artefacts:/root/src/liquid-staking/artefacts
+    depends_on:
+      - zombienet
+  offchain:
+    build:
+      context: .
+      dockerfile: Dockerfile.offchain
+    volumes:
+      - ./artefacts:/home/okalice/src/liquid-staking/artefacts
+    depends_on:
+      - deploy

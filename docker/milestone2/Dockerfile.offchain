@@ -1,0 +1,27 @@
+FROM ubuntu
+
+LABEL dev.okalice.image.authors="Zabuxx" \
+    dev.okalice.image.vendor="okAlice" \
+    dev.okalice.image.description="Milestone 1 - OffChain"
+
+RUN apt-get -qq update && apt-get -qq install -y curl ca-certificates gnupg
+#RUN bash -c 'curl -s https://deb.nodesource.com/setup_18.x | bash'
+RUN apt-get -qq install -y  gcc g++ make git
+
+COPY scripts/functions.sh /tmp
+COPY scripts/install-nodejs.sh /bin
+COPY scripts/launch-dummy.sh /bin
+COPY scripts/fetch-contracts.sh /bin
+
+
+RUN install-nodejs.sh
+
+RUN useradd -ms /bin/bash okalice
+USER okalice
+
+RUN fetch-contracts.sh
+
+ENTRYPOINT [ "launch-dummy.sh" ]
+
+
+

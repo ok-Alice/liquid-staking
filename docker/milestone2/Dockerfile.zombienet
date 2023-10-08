@@ -1,0 +1,27 @@
+FROM debian:stable-slim
+
+# metadata
+LABEL dev.okalice.image.authors="Zabuxx" \
+    dev.okalice.image.vendor="okAlice" \
+    dev.okalice.image.description="Milestone 1 - Zombienet"
+
+EXPOSE 9944 9945 9946
+
+
+RUN useradd -ms /bin/bash okalice
+RUN apt-get -qq update && apt-get -qq install -y curl ssh git nodejs npm
+
+COPY scripts/single_parachain.toml /tmp
+COPY scripts/functions.sh /tmp
+COPY scripts/install-zombienet.sh /bin
+COPY scripts/fetch-contracts.sh /bin
+COPY scripts/run-zombienet.sh /bin
+
+USER okalice
+RUN fetch-contracts.sh
+RUN install-zombienet.sh
+ENV PATH=$PATH:/home/okalice/bin
+#USER root
+ENTRYPOINT [ "run-zombienet.sh" ]
+
+

@@ -1,0 +1,20 @@
+#FROM --platform=linux/amd64 docker.io/paritytech/contracts-ci-linux:latest
+FROM rust
+
+# metadata
+LABEL dev.okalice.image.authors="Zabuxx" \
+    dev.okalice.image.vendor="okAlice" \
+    dev.okalice.image.description="Milestone 1 - Deploy"
+
+RUN apt-get -qq update && apt-get -qq install -y netcat-openbsd
+COPY scripts/functions.sh /tmp
+COPY scripts/fetch-contracts.sh /bin
+COPY scripts/install-cargo-contract.sh /bin
+COPY scripts/build-and-deploy-dummy.sh /bin
+
+RUN fetch-contracts.sh
+RUN install-cargo-contract.sh
+
+ENTRYPOINT [ "build-and-deploy-dummy.sh" ]
+
+
