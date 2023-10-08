@@ -43,4 +43,4 @@ services:
     volumes:
       - ./artefacts:/home/okalice/src/liquid-staking/artefacts
     depends_on:
-      - deploy
+      - deploydummy
