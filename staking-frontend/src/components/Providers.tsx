@@ -8,7 +8,6 @@ interface ProvidersProps {
 }
 
 const Providers = ({ children }: ProvidersProps) => {
-  console.log(Polkadot, ShibuyaTestnet);
   return (
     <>
       <UseInkProvider

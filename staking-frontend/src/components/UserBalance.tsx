@@ -2,18 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import { useApi, useBalance, useWallet } from "useink";
-import { Polkadot, ShibuyaTestnet } from "useink/chains";
+import { Polkadot } from "useink/chains";
 import { planckToDecimalFormatted } from "useink/utils";
 
+const emptyBalance = "--";
+
 const UserBalance: React.FC = () => {
-  const apiPromise = useApi(ShibuyaTestnet.id);
+  const apiPromise = useApi(Polkadot.id);
   const { account } = useWallet();
 
-  const [chainBalance, setChainBalance] = useState<string>("--");
-  const [liquidBalance, setUserLiquidBalance] = useState<string>("--");
-  const [userRewards, setUserRewards] = useState<string>("--");
+  const [chainBalance, setChainBalance] = useState<string>(emptyBalance);
+  const [liquidBalance, setUserLiquidBalance] = useState<string>(emptyBalance);
+  const [exchangeRate, setExchangeRate] = useState<string>(emptyBalance);
 
-  const balance = useBalance(account, ShibuyaTestnet.id);
+  const balance = useBalance(account, Polkadot.id);
 
   useEffect(() => {
     if (account) {
@@ -21,14 +23,13 @@ const UserBalance: React.FC = () => {
         balance
           ? planckToDecimalFormatted(balance.freeBalance, {
               api: apiPromise?.api,
-              decimals: 4,
-            }) || "--"
-          : "--"
+            }) ?? emptyBalance
+          : emptyBalance
       );
     } else {
-      setChainBalance("--");
-      setUserLiquidBalance("--");
-      setUserRewards("--");
+      setChainBalance(emptyBalance);
+      setUserLiquidBalance(emptyBalance);
+      setExchangeRate(emptyBalance);
     }
   }, [account, balance, apiPromise]);
 
@@ -37,14 +38,14 @@ const UserBalance: React.FC = () => {
       <h2 className="text-xl font-semibold mb-2 text-center">Your Wallet</h2>
       <div className="flex flex-col space-y-2 border-t border-b border-gray-200 pt-2 pb-2">
         <div className="flex justify-between">
-          <strong>DOT available:</strong>
+          <strong>Available DOT:</strong>
           {chainBalance}
         </div>
         <div className="flex justify-between">
-          <strong>Liquid Tokens:</strong> {liquidBalance}
+          <strong>Acquired LDOT:</strong> {liquidBalance}
         </div>
         <div className="flex justify-between">
-          <strong>Rewards:</strong> {userRewards}
+          <strong>Exchange Rate:</strong> {exchangeRate}
         </div>
       </div>
     </div>
