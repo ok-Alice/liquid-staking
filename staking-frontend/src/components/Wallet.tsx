@@ -16,7 +16,6 @@ function Wallet() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { account, connect, disconnect, accounts, setAccount } = useWallet();
   const wallets = useAllWallets();
-
   const walletActions = [];
 
   if (accounts?.length) {

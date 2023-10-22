@@ -16,10 +16,6 @@ const Header: React.FC = () => {
       href: "/validators",
       label: "Validators",
     },
-    {
-      href: "/faq",
-      label: "FAQ",
-    },
   ];
   return (
     <header className="w-full p-3">

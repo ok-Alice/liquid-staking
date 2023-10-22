@@ -1,7 +1,23 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { ValidatorSelector } from "@/components";
+import { Validator } from "@/types";
 
-function ValidatorsPage() {
-  return <div>page</div>;
-}
+interface ValidatorsPageProps {}
+
+const ValidatorsPage: React.FC<ValidatorsPageProps> = () => {
+  const [selectedValidator, setSelectedValidator] = useState<Validator | null>(
+    null
+  );
+
+  return (
+    <>
+      <ValidatorSelector
+        selectedValidator={selectedValidator}
+        setSelectedValidator={setSelectedValidator}
+      />
+    </>
+  );
+};
 
 export default ValidatorsPage;

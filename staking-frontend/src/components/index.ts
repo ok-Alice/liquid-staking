@@ -5,4 +5,14 @@ import UserBalance from "./UserBalance";
 import Wallet from "./Wallet";
 import Providers from "./Providers";
 import ChainSwitcher from "./ChainSwitcher";
-export { Header, Footer, Stake, UserBalance, Wallet, Providers, ChainSwitcher };
+import ValidatorSelector from "./ValidatorSelector";
+export {
+  Header,
+  Footer,
+  Stake,
+  UserBalance,
+  Wallet,
+  Providers,
+  ChainSwitcher,
+  ValidatorSelector,
+};
