@@ -89,39 +89,39 @@ const ValidatorMetrics = ({ validator }: ValidatorMetricsProps) => {
   return (
     <Card>
       <div className="flex flex-col xl:flex-row justify-between">
-        <div className="min-w-[20rem]">
+        <div className="min-w-[22rem] p-4">
           <h3 className="text-2xl font-semibold text-gray-800 mb-4">
             {getValidatorName(validator)}
           </h3>
-          <div className="mb-4 flex flex-col">
-            <div className="flex items-center mb-2" title="Email Address">
+          <div className="grid grid-cols-2 2xl:grid-cols-1 gap-2 mb-4">
+            <div className="col-span-1 flex items-center" title="Email Address">
               <FontAwesomeIcon
                 icon={faEnvelope}
                 className="mr-2 text-gray-600"
               />
-              {identity.email || "N/A"}
+              <span>{identity.email || "N/A"}</span>
             </div>
-            <div className="flex items-center mb-2" title="Website">
+            <div className="col-span-1 flex items-center" title="Website">
               <FontAwesomeIcon icon={faGlobe} className="mr-2 text-gray-600" />
-              {identity.web || "N/A"}
+              <span>{identity.web || "N/A"}</span>
             </div>
-            <div className="flex items-center mb-2" title="Matrix Handle">
+            <div className="col-span-1 flex items-center" title="Matrix Handle">
               <FontAwesomeIcon
                 icon={faHashtag}
                 className="mr-2 text-gray-600"
               />
-              {identity.riot || "N/A"}
+              <span>{identity.riot || "N/A"}</span>
             </div>
-            <div className="flex items-center mb-2" title="X Handle">
+            <div className="col-span-1 flex items-center" title="X Handle">
               <FontAwesomeIcon
                 icon={faXTwitter}
                 className="mr-2 text-gray-600"
               />
-              {identity.twitter || "N/A"}
+              <span>{identity.twitter || "N/A"}</span>
             </div>
-            <div className="flex items-center mb-2" title="Legal Name">
+            <div className="col-span-1 flex items-center" title="Legal Name">
               <FontAwesomeIcon icon={faGavel} className="mr-2 text-gray-600" />
-              {identity.legal || "N/A"}
+              <span>{identity.legal || "N/A"}</span>
             </div>
           </div>
           <hr className="my-4" />
