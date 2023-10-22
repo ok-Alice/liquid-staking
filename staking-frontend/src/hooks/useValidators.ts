@@ -23,7 +23,6 @@ const DEFAULT_VALIDATOR = {
     own: "",
     total: "",
   },
-  eraPoints: [],
 };
 
 const useValidators = () => {
@@ -35,6 +34,7 @@ const useValidators = () => {
     const addresses = await getAddresses(api);
     let validators: Validator[] = addresses.map((address) => ({
       ...DEFAULT_VALIDATOR,
+      eraPoints: [],
       address,
     }));
 

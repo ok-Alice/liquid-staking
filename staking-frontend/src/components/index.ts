@@ -6,6 +6,8 @@ import Wallet from "./Wallet";
 import Providers from "./Providers";
 import ChainSwitcher from "./ChainSwitcher";
 import ValidatorSelector from "./ValidatorSelector";
+import ValidatorMetrics from "./ValidatorMetrics";
+
 export {
   Header,
   Footer,
@@ -15,4 +17,5 @@ export {
   Providers,
   ChainSwitcher,
   ValidatorSelector,
+  ValidatorMetrics,
 };
