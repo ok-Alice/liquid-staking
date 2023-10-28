@@ -93,7 +93,7 @@ const ValidatorMetrics = ({ validator }: ValidatorMetricsProps) => {
           <h3 className="text-2xl font-semibold text-gray-800 mb-4">
             {getValidatorName(validator)}
           </h3>
-          <div className="grid grid-cols-2 2xl:grid-cols-1 gap-2 mb-4">
+          <div className="grid grid-cols-2 xl:grid-cols-1 gap-2 mb-4">
             <div className="col-span-1 flex items-center" title="Email Address">
               <FontAwesomeIcon
                 icon={faEnvelope}

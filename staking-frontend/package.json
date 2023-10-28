@@ -15,13 +15,15 @@
     "@headlessui/react": "^1.7.17",
     "@polkadot/api": "^10.9.1",
     "@polkadot/keyring": "^12.5.1",
+    "bufferutil": "^4.0.8",
     "chart.js": "^4.4.0",
     "jotai": "^2.4.3",
     "next": "latest",
     "react": "latest",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "latest",
-    "useink": "^1.14.1"
+    "useink": "^1.14.1",
+    "utf-8-validate": "^6.0.3"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
