@@ -2,49 +2,15 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useWallet, useAllWallets } from "useink";
-import { faWallet } from "@fortawesome/free-solid-svg-icons";
+import { useAllWallets, useWallet } from "useink";
 
-import { Button, DropdownButton } from "@/ui-kit/buttons";
 import Modal from "@/ui-kit/Modal";
+import { Button } from "@/ui-kit/buttons";
 
-function getShortAddress(address: string) {
-  return `${address.slice(0, 5)}...${address.slice(-5)}`;
-}
-
-function Wallet() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { account, connect, disconnect, accounts, setAccount } = useWallet();
+const ConnectWallet = () => {
   const wallets = useAllWallets();
-  const walletActions = [];
-
-  if (accounts?.length) {
-    for (const a of accounts) {
-      walletActions.push({
-        text: `${a.name ? a.name : getShortAddress(a.address)}`,
-        onClick: () => setAccount(a),
-      });
-    }
-  }
-
-  if (account) {
-    return (
-      <DropdownButton
-        icon={faWallet}
-        text={`${getShortAddress(account.address)} ${
-          account.name ? ` | ${account.name}` : ""
-        }`}
-        dropdownActions={[
-          ...walletActions,
-          {
-            text: "Disconnect",
-            onClick: disconnect,
-          },
-        ]}
-      />
-    );
-  }
-
+  const { connect } = useWallet();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <>
       <Button onClick={() => setIsModalOpen(true)}>Connect Wallet</Button>
@@ -83,6 +49,6 @@ function Wallet() {
       </Modal>
     </>
   );
-}
+};
 
-export default Wallet;
+export default ConnectWallet;

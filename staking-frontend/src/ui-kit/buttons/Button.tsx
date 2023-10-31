@@ -2,6 +2,7 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   variant?: "primary" | "secondary" | "sky";
+  disabled?: boolean;
 }
 
 const variantClasses = {
@@ -10,11 +11,17 @@ const variantClasses = {
   sky: "bg-sky-500 hover:bg-sky-700",
 };
 
-const Button: React.FC<ButtonProps> = ({ children, onClick, variant }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  onClick,
+  variant,
+  disabled,
+}) => {
   const classes = variantClasses[variant || "sky"];
 
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       className={`px-4 py-3 text-white rounded-2xl ${classes}`}
     >

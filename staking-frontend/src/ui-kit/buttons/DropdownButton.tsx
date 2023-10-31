@@ -38,7 +38,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({
       <div>
         <button
           type="button"
-          className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-2xl cursor-pointer hover:bg-gray-100"
+          className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-2xl cursor-pointer hover:bg-gray-200 bg-gray-100"
           onClick={handleButtonClick}
         >
           {icon && <FontAwesomeIcon icon={icon} className="mr-2" />}
