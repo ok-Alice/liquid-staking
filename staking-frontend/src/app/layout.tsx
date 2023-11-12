@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+
+import { Footer, Header, Providers } from "@/components";
+
+import Loading from "./loading";
 
 import "./globals.css";
-import { Footer, Header, Providers } from "@/components";
 
 export const metadata: Metadata = {
   title: "Liquid Staking Platform",
@@ -20,7 +24,7 @@ export default function RootLayout({
           <Header />
 
           <div className="w-full max-w-screen-2xl mx-auto px-4 mt-12 flex flex-col items-center flex-grow">
-            {children}
+            <Suspense fallback={<Loading />}>{children} </Suspense>
           </div>
           <Footer />
         </Providers>

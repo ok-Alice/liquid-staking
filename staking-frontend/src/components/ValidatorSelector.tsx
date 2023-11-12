@@ -5,6 +5,7 @@ import { Validator } from "@/types";
 import { useValidators } from "@/hooks";
 import { getValidatorName } from "@/utils";
 import { useEffect } from "react";
+import Spinner from "@/ui-kit/Spinner";
 
 interface ValidatorSelectorProps {
   selectedValidator: Validator | null;
@@ -44,9 +45,7 @@ const ValidatorSelector: React.FC<ValidatorSelectorProps> = ({
           ) : (
             <div className="flex  justify-between align-center">
               <span>Validators loading...</span>
-              {isLoading && (
-                <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-black"></span>
-              )}
+              {isLoading && <Spinner />}
             </div>
           )}
         </Listbox.Button>
