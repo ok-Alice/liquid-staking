@@ -1,8 +1,5 @@
 "use client";
 
-import { Validator } from "@/types";
-import Card from "@/ui-kit/Card";
-import { getValidatorName } from "@/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -24,6 +21,10 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useEffect, useState } from "react";
+
+import { Validator } from "@/types";
+import Card from "@/ui-kit/Card";
+import { ValidatorName } from "./ValidatorName";
 
 ChartJS.register(
   CategoryScale,
@@ -91,7 +92,7 @@ const ValidatorMetrics = ({ validator }: ValidatorMetricsProps) => {
       <div className="flex flex-col xl:flex-row justify-between">
         <div className="min-w-[22rem] p-4">
           <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-            {getValidatorName(validator)}
+            <ValidatorName validator={validator} />
           </h3>
           <div className="grid grid-cols-2 xl:grid-cols-1 gap-2 mb-4">
             <div className="col-span-1 flex items-center" title="Email Address">

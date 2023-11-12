@@ -1,21 +1,22 @@
 "use client";
 
 import { Listbox } from "@headlessui/react";
+import { useEffect } from "react";
+
 import { Validator } from "@/types";
 import { useValidators } from "@/hooks";
-import { getValidatorName } from "@/utils";
-import { useEffect } from "react";
 import Spinner from "@/ui-kit/Spinner";
+import { ValidatorName } from "./ValidatorName";
 
 interface ValidatorSelectorProps {
   selectedValidator: Validator | null;
   setSelectedValidator: (validator: Validator) => void;
 }
 
-const ValidatorSelector: React.FC<ValidatorSelectorProps> = ({
+function ValidatorSelector({
   selectedValidator,
   setSelectedValidator,
-}) => {
+}: ValidatorSelectorProps) {
   const { validators, isLoading } = useValidators();
   const handleValidatorChange = (validator: Validator) => {
     setSelectedValidator(validator);
@@ -41,7 +42,7 @@ const ValidatorSelector: React.FC<ValidatorSelectorProps> = ({
           className="block py-4 w-full px-4 text-left bg-white border rounded-lg shadow-sm focus:outline-none"
         >
           {selectedValidator ? (
-            getValidatorName(selectedValidator)
+            <ValidatorName validator={selectedValidator} />
           ) : (
             <div className="flex  justify-between align-center">
               <span>Validators loading...</span>
@@ -64,13 +65,13 @@ const ValidatorSelector: React.FC<ValidatorSelectorProps> = ({
                 } cursor-pointer select-none relative px-4 py-4`
               }
             >
-              {getValidatorName(validator)}
+              <ValidatorName validator={validator} />
             </Listbox.Option>
           ))}
         </Listbox.Options>
       </div>
     </Listbox>
   );
-};
+}
 
 export default ValidatorSelector;

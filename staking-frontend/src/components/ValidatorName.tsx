@@ -1,6 +1,9 @@
-import { Validator } from "./types";
+import { Validator } from "@/types";
 
-export const getValidatorName = (validator: Validator) => {
+type ValidatorNameProps = {
+  validator: Validator;
+};
+export const ValidatorName = ({ validator }: ValidatorNameProps) => {
   const { display, parent } = validator.identity;
 
   if (!display) {
