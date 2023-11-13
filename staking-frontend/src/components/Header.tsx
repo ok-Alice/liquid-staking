@@ -3,6 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowAltCircleDown,
+  faExchange,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Account from "./Account";
 
@@ -10,12 +16,19 @@ const Header: React.FC = () => {
   const pathname = usePathname();
   const links = [
     {
-      href: "/",
+      href: "/staking",
       label: "Staking",
+      icon: faExchange,
+    },
+    {
+      href: "/unstaking",
+      label: "Unstaking",
+      icon: faArrowAltCircleDown,
     },
     {
       href: "/validators",
       label: "Validators",
+      icon: faUsers,
     },
   ];
   return (
@@ -40,7 +53,10 @@ const Header: React.FC = () => {
                     : "hover:text-gray-400"
                 }`}
               >
-                {link.label}
+                <span className="flex items-center space-x-2">
+                  <FontAwesomeIcon icon={link.icon} className="w-5 h-5" />
+                  <span>{link.label}</span>
+                </span>
               </Link>
             ))}
           </nav>

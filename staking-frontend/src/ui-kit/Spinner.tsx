@@ -1,12 +1,12 @@
 import React from "react";
 
 type SpinnerProps = {
-  className?: string;
+  size?: string;
 };
-const Spinner = ({ className }: SpinnerProps) => {
+const Spinner = ({ size = "h-5 w-5" }: SpinnerProps) => {
   return (
     <span
-      className={`animate-spin rounded-full border-t-2 border-b-2 border-black h5 w-5 ${className}`}
+      className={`animate-spin rounded-full border-t-2 border-b-2 border-black ${size}`}
     ></span>
   );
 };
