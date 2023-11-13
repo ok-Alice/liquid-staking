@@ -35,13 +35,15 @@ const Header: React.FC = () => {
     <header className="w-full p-3">
       <div className="mx-auto max-w-screen-2xl flex justify-between items-center px-4">
         <div className="flex items-center space-x-8">
-          <Image
-            src="/logo.png"
-            alt="OkAlice Liquid Staking Platform"
-            width="250"
-            height="88"
-            priority={true}
-          />
+          <Link href="/staking">
+            <Image
+              src="/logo.png"
+              alt="OkAlice Liquid Staking Platform"
+              width="250"
+              height="88"
+              priority={true}
+            />
+          </Link>
           <nav className="flex space-x-8 text-2xl text-primary">
             {links.map((link) => (
               <Link
