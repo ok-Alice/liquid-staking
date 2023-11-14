@@ -1,15 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useWallet } from "useink";
+import { useAtomValue } from "jotai";
 import Card from "@/ui-kit/Card";
 import { Button } from "@/ui-kit/buttons";
 import ConnectWallet from "./ConnectWallet";
 
+import { mockedDataAtom } from "@/store";
+
 const Claiming: React.FC = () => {
   const { account } = useWallet();
 
-  const [inFlightAmount, setInFlightAmount] = useState<number>(3.32);
-  const [claimableAmount, setClaimableAmount] = useState<number>(0);
+  const { DOTInFlight, claimableDOT } = useAtomValue(mockedDataAtom);
 
   const handleClaim = async () => {
     // Your claim logic here
@@ -21,19 +23,19 @@ const Claiming: React.FC = () => {
         <div className="flex justify-between text-white font-bold">
           <div>
             <h2 className="font-semibold mb-2 text-center">DOT In Flight</h2>
-            {inFlightAmount} DOT
+            {account ? DOTInFlight : "--"} DOT
           </div>
 
           <div>
             <h2 className="font-semibold mb-2 text-center">Claimable DOT</h2>
-            {claimableAmount} DOT
+            {account ? claimableDOT : "--"} DOT
           </div>
         </div>
       </Card>
       <Card small containerClassName="-mt-4">
         <div className="flex flex-col space-y-4">
           {account ? (
-            <Button onClick={handleClaim} disabled={!claimableAmount}>
+            <Button onClick={handleClaim} disabled={!claimableDOT}>
               Claim Available DOT
             </Button>
           ) : (

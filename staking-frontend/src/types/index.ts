@@ -24,3 +24,12 @@ export type ValidatorIdentity = {
   riot: string | undefined;
   twitter: string | undefined;
 };
+
+export type MockedData = {
+  availableDOT: number;
+  availableLDOT: number;
+  DOTToLDOTExchangeRate: number;
+  LDOTToDOTExchangeRate: number;
+  DOTInFlight: number;
+  claimableDOT: number;
+};

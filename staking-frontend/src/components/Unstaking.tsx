@@ -3,23 +3,29 @@ import React, { useMemo, useState } from "react";
 import { useWallet } from "useink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
+import { useAtomValue } from "jotai";
 
 import Card from "@/ui-kit/Card";
 import { Button } from "@/ui-kit/buttons";
+import { mockedDataAtom } from "@/store";
 import ConnectWallet from "./ConnectWallet";
 import ChainBalance from "./ChainBalance";
 
 const UnStaking: React.FC = () => {
   const [unstakeAmount, setUnstakeAmount] = useState<string>("");
   const { account } = useWallet();
-  const [isValid, setIsValid] = useState(true);
-  const exchangeRate = 0.912;
+  const [overLimit, setOverLimit] = useState(false);
+  const { LDOTToDOTExchangeRate: exchangeRate, availableLDOT } =
+    useAtomValue(mockedDataAtom);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const isValidInput = value === "" || /^(\d+\.?\d*|\.\d+)$/.test(value);
-    setIsValid(isValidInput);
-    if (isValidInput) {
+
+    let isValid = value === "" || /^(\d+\.?\d*|\.\d+)$/.test(value);
+
+    // convert to number and check if it is less than availableDOT
+    if (isValid) {
+      setOverLimit(Number(value) > Number(availableLDOT));
       setUnstakeAmount(value);
     }
   };
@@ -29,8 +35,11 @@ const UnStaking: React.FC = () => {
   };
 
   const DOTToRecieve = useMemo(
-    () => (unstakeAmount ? Number(unstakeAmount) * Number(exchangeRate) : "--"),
-    [unstakeAmount]
+    () =>
+      unstakeAmount && !overLimit
+        ? Number(unstakeAmount) * Number(exchangeRate)
+        : "--",
+    [unstakeAmount, exchangeRate, overLimit]
   );
 
   return (
@@ -39,7 +48,8 @@ const UnStaking: React.FC = () => {
         <div className="flex justify-between text-white font-bold">
           <div>
             <h2 className="font-semibold mb-2 text-center">Available LDOT</h2>
-            <ChainBalance />
+            {/* <ChainBalance /> */}
+            {account ? availableLDOT : "--"}
           </div>
 
           <div>
@@ -66,13 +76,13 @@ const UnStaking: React.FC = () => {
               disabled={!account}
             />
           </div>
-          <span className={`text-red-500 ${isValid ? "hidden" : ""}`}>
-            Please enter a valid number
+          <span className={`text-red-500 ${overLimit ? "" : "hidden"}`}>
+            Entered amount exceeds available DOT
           </span>
           {account ? (
             <Button
               onClick={handleStake}
-              disabled={!isValid || unstakeAmount === ""}
+              disabled={overLimit || unstakeAmount === ""}
             >
               Stake
             </Button>
