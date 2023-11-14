@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAllWallets, useWallet } from "useink";
 
 import Modal from "@/ui-kit/Modal";
 import { Button } from "@/ui-kit/buttons";
 
-const ConnectWallet = () => {
+const ConnectWallet: React.FC = () => {
   const wallets = useAllWallets();
   const { connect } = useWallet();
   const [isModalOpen, setIsModalOpen] = useState(false);

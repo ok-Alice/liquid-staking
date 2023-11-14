@@ -1,22 +1,22 @@
 "use client";
 
 import { Listbox } from "@headlessui/react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { Validator } from "@/types";
 import { useValidators } from "@/hooks";
 import Spinner from "@/ui-kit/Spinner";
-import { ValidatorName } from "./ValidatorName";
+import ValidatorName from "./ValidatorName";
 
-interface ValidatorSelectorProps {
+interface Props {
   selectedValidator: Validator | null;
   setSelectedValidator: (validator: Validator) => void;
 }
 
-function ValidatorSelector({
+const ValidatorSelector: React.FC<Props> = ({
   selectedValidator,
   setSelectedValidator,
-}: ValidatorSelectorProps) {
+}: Props) => {
   const { validators, isLoading } = useValidators();
   const handleValidatorChange = (validator: Validator) => {
     setSelectedValidator(validator);
@@ -72,6 +72,6 @@ function ValidatorSelector({
       </div>
     </Listbox>
   );
-}
+};
 
 export default ValidatorSelector;

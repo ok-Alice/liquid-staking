@@ -6,12 +6,13 @@ import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import { DropdownButton } from "@/ui-kit/buttons";
 import ConnectWallet from "./ConnectWallet";
 import ChainBalance from "./ChainBalance";
+import React from "react";
 
 function getShortAddress(address: string) {
   return `${address.slice(0, 5)}...${address.slice(-5)}`;
 }
 
-function Account() {
+const Account: React.FC = () => {
   const { account, disconnect, accounts, setAccount } = useWallet();
 
   const walletActions = [];
@@ -50,6 +51,6 @@ function Account() {
   } else {
     return <ConnectWallet />;
   }
-}
+};
 
 export default Account;

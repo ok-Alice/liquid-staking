@@ -2,7 +2,7 @@
 
 ## Description
 
-Our Liquid Staking Platform offers Polkadot users a seamless experience for staking their DOT tokens. Designed with a user-centric approach, the platform not only allows users to easily stake DOTs but also provides them with a clear overview of their staked DOTs, received lDOTs, and rewards. Built using the robust Next.js framework and leveraging the power of the useInk library for Polkadot interaction, the platform integrates modern web technologies with the Polkadot blockchain. With a sleek design powered by Tailwind CSS, users can navigate and interact efficiently, making their staking journey intuitive and rewarding.
+Our Liquid Staking Platform offers Polkadot users a seamless experience for staking their DOT tokens. Designed with a user-centric approach, the platform not only allows users to easily stake DOT but also provides them with a clear overview of their staked DOT, received LDOT, and rewards. Built using the robust Next.js framework and leveraging the power of the useInk library for Polkadot interaction, the platform integrates modern web technologies with the Polkadot blockchain. With a sleek design powered by Tailwind CSS, users can navigate and interact efficiently, making their staking journey intuitive and rewarding.
 
 
 ## Installation

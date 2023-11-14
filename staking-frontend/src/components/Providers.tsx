@@ -3,11 +3,11 @@ import React from "react";
 import { UseInkProvider } from "useink";
 import { Polkadot, ShibuyaTestnet, WestendTestnet } from "useink/chains";
 
-interface ProvidersProps {
+interface Props {
   children: React.ReactNode;
 }
 
-const Providers = ({ children }: ProvidersProps) => {
+const Providers: React.FC<Props> = ({ children }: Props) => {
   return (
     <>
       <UseInkProvider

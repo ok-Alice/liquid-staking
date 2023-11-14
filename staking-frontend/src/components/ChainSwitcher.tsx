@@ -1,8 +1,10 @@
 "use client";
-import DropdownButton from "@/ui-kit/buttons/DropdownButton";
+
 import React, { useState } from "react";
 import { useApi } from "useink";
 import { ChainId } from "useink/chains";
+
+import DropdownButton from "@/ui-kit/buttons/DropdownButton";
 
 const ChainSwitcher: React.FC = () => {
   const [selectedChain, setSelectedChain] =

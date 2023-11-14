@@ -1,4 +1,4 @@
-import { Staking } from "@/components";
+import Staking from "@/components/Staking";
 import PageTitle from "@/ui-kit/PageTitle";
 
 function StakingPage() {

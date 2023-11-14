@@ -1,9 +1,9 @@
 import { Validator } from "@/types";
 
-type ValidatorNameProps = {
+type Props = {
   validator: Validator;
 };
-export const ValidatorName = ({ validator }: ValidatorNameProps) => {
+const ValidatorName: React.FC<Props> = ({ validator }: Props) => {
   const { display, parent } = validator.identity;
 
   if (!display) {
@@ -20,3 +20,5 @@ export const ValidatorName = ({ validator }: ValidatorNameProps) => {
 
   return display;
 };
+
+export default ValidatorName;

@@ -20,11 +20,11 @@ import {
   TooltipItem,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Validator } from "@/types";
 import Card from "@/ui-kit/Card";
-import { ValidatorName } from "./ValidatorName";
+import ValidatorName from "./ValidatorName";
 
 ChartJS.register(
   CategoryScale,
@@ -36,11 +36,11 @@ ChartJS.register(
   Legend
 );
 
-interface ValidatorMetricsProps {
+interface Props {
   validator: Validator;
 }
 
-const ValidatorMetrics = ({ validator }: ValidatorMetricsProps) => {
+const ValidatorMetrics: React.FC<Props> = ({ validator }: Props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const { identity, staked, eraPoints } = validator;
   const data = {

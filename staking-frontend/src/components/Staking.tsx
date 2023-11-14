@@ -1,14 +1,33 @@
 "use client";
-import { useMemo, useState } from "react";
-import Card from "@/ui-kit/Card";
-import { Stake } from ".";
-import ChainBalance from "./ChainBalance";
+import React, { useMemo, useState } from "react";
+import { useWallet } from "useink";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoins } from "@fortawesome/free-solid-svg-icons";
 
-const Staking = () => {
+import Card from "@/ui-kit/Card";
+import ChainBalance from "./ChainBalance";
+import { Button } from "@/ui-kit/buttons";
+import ConnectWallet from "./ConnectWallet";
+
+const Staking: React.FC = () => {
+  const { account } = useWallet();
+  const [isValid, setIsValid] = useState(true);
   const [stakeAmount, setStakeAmount] = useState<string>("");
 
   const exchangeRate = 1.156;
-  const transactionFee = "0.0001 DOT";
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const isValidInput = value === "" || /^(\d+\.?\d*|\.\d+)$/.test(value);
+    setIsValid(isValidInput);
+    if (isValidInput) {
+      setStakeAmount(value);
+    }
+  };
+
+  const handleStake = async () => {
+    // Your stake logic here
+  };
 
   const liquidBalancetoReceive = useMemo(
     () => (stakeAmount ? Number(stakeAmount) * Number(exchangeRate) : "--"),
@@ -25,24 +44,48 @@ const Staking = () => {
           </div>
 
           <div>
-            <h2 className="font-semibold mb-2 text-center">Acquired LDOT</h2>
-            2.4 LDOT
+            <h2 className="font-semibold mb-2 text-center">
+              Current Exchange Rate
+            </h2>
+            1:{exchangeRate}
           </div>
         </div>
       </Card>
       <Card small containerClassName="-mt-4">
-        <Stake stakeAmount={stakeAmount} setStakeAmount={setStakeAmount} />
+        <div className="flex flex-col space-y-4">
+          <div className="relative border rounded-2xl w-full">
+            <FontAwesomeIcon
+              icon={faCoins}
+              className="absolute top-1/2 left-3 transform -translate-y-1/2"
+            />
+            <input
+              type="text"
+              value={stakeAmount}
+              onChange={handleInputChange}
+              placeholder="Amount of DOTs"
+              className="pl-10 p-2 py-4 border-0 rounded-2xl w-full"
+              disabled={!account}
+            />
+          </div>
+          <span className={`text-red-500 ${isValid ? "hidden" : ""}`}>
+            Please enter a valid number
+          </span>
+          {account ? (
+            <Button
+              onClick={handleStake}
+              disabled={!isValid || stakeAmount === ""}
+            >
+              Stake
+            </Button>
+          ) : (
+            <ConnectWallet />
+          )}
+        </div>
 
         <div>
           <div className="flex flex-col space-y-3 pt-4">
             <div className="flex justify-between">
               <strong>You will receive</strong> {liquidBalancetoReceive} LDOT
-            </div>
-            <div className="flex justify-between">
-              <strong>Exchange rate</strong> 1:{exchangeRate}
-            </div>
-            <div className="flex justify-between">
-              <strong>Transaction cost</strong> {transactionFee}
             </div>
           </div>
         </div>

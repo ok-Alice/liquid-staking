@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApi, useBalance, useWallet } from "useink";
 import { Polkadot } from "useink/chains";
 import { planckToDecimalFormatted } from "useink/utils";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-interface ChainBalanceProps {
+interface Props {
   showIcon?: boolean;
 }
 
 const EMPTY_BALANCE = "-- DOT";
 
-const ChainBalance = ({ showIcon }: ChainBalanceProps) => {
+const ChainBalance: React.FC<Props> = ({ showIcon }: Props) => {
   const [chainBalance, setChainBalance] = useState<string>(EMPTY_BALANCE);
   const { account } = useWallet();
   const balance = useBalance(account, Polkadot.id);

@@ -11,18 +11,25 @@ const variantClasses = {
   sky: "bg-sky-500 hover:bg-sky-700",
 };
 
+const disabledClasses = {
+  primary: "bg-primary-900/20 cursor-not-allowed opacity-50",
+  secondary: "bg-secondary-900/20 cursor-not-allowed",
+  sky: "bg-sky-900/20 cursor-not-allowed",
+};
+
 const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
-  variant,
+  variant = "sky", // Default to "sky" variant
   disabled,
 }) => {
-  const classes = variantClasses[variant || "sky"];
+  // Determine the class based on variant and disabled state
+  const classes = disabled ? disabledClasses[variant] : variantClasses[variant];
 
   return (
     <button
       disabled={disabled}
-      onClick={onClick}
+      onClick={!disabled ? onClick : undefined} // Prevent onClick if disabled
       className={`px-4 py-3 text-white rounded-2xl ${classes}`}
     >
       {children}

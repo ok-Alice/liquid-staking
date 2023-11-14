@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { ValidatorMetrics, ValidatorSelector } from "@/components";
+import ValidatorMetrics from "@/components/ValidatorMetrics";
+import ValidatorSelector from "@/components/ValidatorSelector";
 import { Validator } from "@/types";
 import PageTitle from "@/ui-kit/PageTitle";
 

@@ -44,7 +44,7 @@ const Header: React.FC = () => {
               priority={true}
             />
           </Link>
-          <nav className="flex space-x-8 text-2xl text-primary">
+          <nav className="flex space-x-12 text-2xl text-primary">
             {links.map((link) => (
               <Link
                 key={link.href}
