@@ -25,6 +25,13 @@ export type ValidatorIdentity = {
   twitter: string | undefined;
 };
 
+export type Notification = {
+  id: string;
+  title: string;
+  message: string;
+  duration?: number;
+};
+
 export type MockedData = {
   availableDOT: number;
   availableLDOT: number;

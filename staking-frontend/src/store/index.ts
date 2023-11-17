@@ -1,7 +1,8 @@
 import { atom } from "jotai";
-import { MockedData, Validator } from "@/types";
+import { MockedData, Notification, Validator } from "@/types";
 
 export const validatorsAtom = atom<Validator[]>([]);
+export const notificationsAtom = atom<Notification[]>([]);
 
 // mocked data
 export const mockedDataAtom = atom<MockedData>({
