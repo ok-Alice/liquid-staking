@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Props) {
         <Providers>
           <Header />
 
-          <main className="w-full max-w-screen-2xl mx-auto px-4 flex flex-col items-center flex-grow">
+          <main className="w-full max-w-screen-2xl mx-auto px-4 pt-12 flex flex-col items-center flex-grow">
             {children}
           </main>
           <Footer />

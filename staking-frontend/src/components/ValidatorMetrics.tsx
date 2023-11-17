@@ -56,7 +56,7 @@ const ValidatorMetrics: React.FC<Props> = ({ validator }: Props) => {
   };
 
   const options = {
-    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         callbacks: {
@@ -137,7 +137,7 @@ const ValidatorMetrics: React.FC<Props> = ({ validator }: Props) => {
             </div>
           </div>
         </div>
-        <div className="transition-all ease-in-out duration-300 transform w-full ml-10 p-4">
+        <div className="w-full xl:ml-10 p-4 relative">
           <Line key={windowWidth} data={data} options={options} />
         </div>
       </div>
