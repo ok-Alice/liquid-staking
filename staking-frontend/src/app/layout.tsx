@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Providers from "@/components/Providers";
+import AccountListener from "@/components/AccountListener";
 import Notifications from "@/ui-kit/notifications";
 
 import "@/styles/globals.css";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: Props) {
           </main>
           <Footer />
           <Notifications />
+          <AccountListener />
         </Providers>
       </body>
     </html>

@@ -6,12 +6,12 @@ import Card from "@/ui-kit/Card";
 import { Button } from "@/ui-kit/buttons";
 import ConnectWallet from "./ConnectWallet";
 
-import { mockedDataAtom } from "@/store";
+import { chainBalanceAtom } from "@/store";
 
 const Claiming: React.FC = () => {
   const { account } = useWallet();
 
-  const { DOTInFlight, claimableDOT } = useAtomValue(mockedDataAtom);
+  const { DOTInFlight, claimableDOT } = useAtomValue(chainBalanceAtom);
 
   const handleClaim = async () => {
     // Your claim logic here

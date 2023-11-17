@@ -15,24 +15,24 @@ const Notification: React.FC<Props> = ({ notification }) => {
   useEffect(() => {
     if (notification.duration) {
       const timer = setTimeout(() => {
-        removeNotification(notification.id);
+        removeNotification(notification.id as string);
       }, notification.duration);
       return () => clearTimeout(timer);
     }
   }, [notification, removeNotification]);
 
   return (
-    <div className="bg-white p-3 rounded-lg shadow-md border border-gray-200">
+    <div className="bg-white p-3 rounded-2xl shadow-md border border-gray-200">
       <div className="flex justify-between items-center">
         <h4 className="text-lg font-semibold">{notification.title}</h4>
         <button
-          onClick={() => removeNotification(notification.id)}
+          onClick={() => removeNotification(notification.id as string)}
           className="ml-4 flex-shrink-0"
         >
           <CloseIcon className="h-6 w-6" />
         </button>
       </div>
-      <p className="text-sm text-gray-600 py-1">{notification.message}</p>
+      <p className="text-md text-gray-600 py-1">{notification.message}</p>
     </div>
   );
 };

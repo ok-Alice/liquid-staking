@@ -7,16 +7,16 @@ import { useAtomValue } from "jotai";
 
 import Card from "@/ui-kit/Card";
 import { Button } from "@/ui-kit/buttons";
-import { mockedDataAtom } from "@/store";
+import { chainBalanceAtom, exchangeRatesAtom } from "@/store";
 import ConnectWallet from "./ConnectWallet";
-import ChainBalance from "./ChainBalance";
 
 const UnStaking: React.FC = () => {
   const [unstakeAmount, setUnstakeAmount] = useState<string>("");
   const { account } = useWallet();
   const [overLimit, setOverLimit] = useState(false);
-  const { LDOTToDOTExchangeRate: exchangeRate, availableLDOT } =
-    useAtomValue(mockedDataAtom);
+  const { availableLDOT } = useAtomValue(chainBalanceAtom);
+  const { LDOTToDOTExchangeRate: exchangeRate } =
+    useAtomValue(exchangeRatesAtom);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

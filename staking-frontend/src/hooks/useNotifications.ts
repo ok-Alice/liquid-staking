@@ -6,16 +6,16 @@ import { Notification } from "@/types";
 const useNotifications = () => {
   const [notifications, setNotifications] = useAtom(notificationsAtom);
 
-  const addNotification = (
-    title: string,
-    message: string,
-    duration: number | undefined = 0
-  ) => {
+  const addNotification = ({ id, title, message, duration }: Notification) => {
+    // if there is already a notification with the same id, don't add it
+    if (id && notifications.find((notification) => notification.id === id))
+      return;
+
     const newNotification: Notification = {
       title,
       message,
       duration,
-      id: Date.now().toString(),
+      id: id ? id : Date.now().toString(),
     };
     setNotifications((prev) => [...prev, newNotification]);
   };
@@ -25,6 +25,8 @@ const useNotifications = () => {
       notifications.filter((notification) => notification.id !== id)
     );
   };
+
+  console.log(notifications);
 
   return { notifications, addNotification, removeNotification };
 };

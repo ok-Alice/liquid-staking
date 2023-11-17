@@ -6,9 +6,8 @@ import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useAtomValue } from "jotai";
 
 import Card from "@/ui-kit/Card";
-import ChainBalance from "./ChainBalance";
 import { Button } from "@/ui-kit/buttons";
-import { mockedDataAtom } from "@/store";
+import { chainBalanceAtom, exchangeRatesAtom } from "@/store";
 import ConnectWallet from "./ConnectWallet";
 
 const Staking: React.FC = () => {
@@ -17,8 +16,9 @@ const Staking: React.FC = () => {
 
   const [stakeAmount, setStakeAmount] = useState<string>("");
 
-  const { DOTToLDOTExchangeRate: exchangeRate, availableDOT } =
-    useAtomValue(mockedDataAtom);
+  const { availableDOT } = useAtomValue(chainBalanceAtom);
+  const { DOTToLDOTExchangeRate: exchangeRate } =
+    useAtomValue(exchangeRatesAtom);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

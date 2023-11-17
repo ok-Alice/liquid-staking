@@ -26,17 +26,21 @@ export type ValidatorIdentity = {
 };
 
 export type Notification = {
-  id: string;
+  id?: string;
   title: string;
   message: string;
   duration?: number;
 };
 
-export type MockedData = {
+export type ChainBalance = {
   availableDOT: number;
   availableLDOT: number;
-  DOTToLDOTExchangeRate: number;
-  LDOTToDOTExchangeRate: number;
+
   DOTInFlight: number;
   claimableDOT: number;
+};
+
+export type ExchangeRates = {
+  DOTToLDOTExchangeRate: number;
+  LDOTToDOTExchangeRate: number;
 };
