@@ -52,7 +52,7 @@ const UnStaking: React.FC = () => {
         resolve();
         setBalance((prev) => ({
           ...prev,
-          availableDOT: prev.availableLDOT - Number(unstakeAmount),
+          availableLDOT: prev.availableLDOT - Number(unstakeAmount),
           DOTInFlight: prev.DOTInFlight + Number(DOTToRecieve),
         }));
         setShowConfirmUnstake(false);
@@ -72,15 +72,13 @@ const UnStaking: React.FC = () => {
       <Card small className="bg-sky-900/20 rounded-t-2xl shadow-lg p-8 pt-4">
         <div className="flex justify-between text-white font-bold">
           <div>
-            <h2 className="font-semibold mb-2 text-center">Available LDOT</h2>
+            <h2 className="font-semibold mb-2">Available LDOT</h2>
             {/* <ChainBalance /> */}
             {account ? availableLDOT : "--"}
           </div>
 
           <div>
-            <h2 className="font-semibold mb-2 text-center">
-              Current Exchange Rate
-            </h2>
+            <h2 className="font-semibold mb-2">Current Exchange Rate</h2>
             1:{exchangeRate}
           </div>
         </div>
