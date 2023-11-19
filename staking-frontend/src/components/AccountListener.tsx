@@ -15,7 +15,6 @@ const AccountListener: React.FC = () => {
   const setBalance = useSetAtom(chainBalanceAtom);
 
   useEffect(() => {
-    console.log(claimableDOT);
     if (account && claimableDOT) {
       addNotification({
         title: "Claimable DOT",
