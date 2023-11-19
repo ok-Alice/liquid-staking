@@ -19,3 +19,8 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+/* Add this block to remove default outlines */
+* {
+  outline: none;
+}

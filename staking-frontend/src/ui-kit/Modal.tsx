@@ -37,7 +37,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <Dialog
       open={isOpen}
-      onClose={onClose}
+      onClose={onCancel ? onCancel : onClose}
       className="fixed inset-0 z-50 overflow-auto"
     >
       <div className="flex items-start justify-center min-h-screen">

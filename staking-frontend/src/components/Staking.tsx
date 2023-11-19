@@ -55,6 +55,7 @@ const Staking: React.FC = () => {
           availableLDOT: prev.availableLDOT + Number(liquidBalancetoReceive),
         }));
         setShowConfirmStake(false);
+        setStakeAmount("");
       }, 5000);
     });
   };
@@ -84,35 +85,40 @@ const Staking: React.FC = () => {
         </div>
       </Card>
       <Card small containerClassName="-mt-4">
-        <div className="flex flex-col space-y-4">
-          <div className="relative border rounded-2xl w-full">
-            <FontAwesomeIcon
-              icon={faCoins}
-              className="absolute top-1/2 left-3 transform -translate-y-1/2"
-            />
-            <input
-              type="text"
-              value={stakeAmount}
-              onChange={handleInputChange}
-              placeholder="Amount of DOTs"
-              className="pl-10 p-2 py-4 border-0 rounded-2xl w-full"
-              disabled={!account}
-            />
+        <form
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            setShowConfirmStake(true);
+          }}
+        >
+          <div className="flex flex-col space-y-4">
+            <div className="relative border rounded-2xl w-full">
+              <FontAwesomeIcon
+                icon={faCoins}
+                className="absolute top-1/2 left-3 transform -translate-y-1/2"
+              />
+              <input
+                type="text"
+                value={stakeAmount}
+                onChange={handleInputChange}
+                placeholder="Amount of DOTs"
+                className="pl-10 p-2 py-4 border-0 rounded-2xl w-full"
+                disabled={!account}
+              />
+            </div>
+            <span className={`text-red-500 ${overLimit ? "" : "hidden"}`}>
+              Entered amount exceeds available DOT
+            </span>
+            {account ? (
+              <Button type="submit" disabled={overLimit || !stakeAmount}>
+                Stake
+              </Button>
+            ) : (
+              <ConnectWallet />
+            )}
           </div>
-          <span className={`text-red-500 ${overLimit ? "" : "hidden"}`}>
-            Entered amount exceeds available DOT
-          </span>
-          {account ? (
-            <Button
-              onClick={() => setShowConfirmStake(true)}
-              disabled={overLimit || !stakeAmount}
-            >
-              Stake
-            </Button>
-          ) : (
-            <ConnectWallet />
-          )}
-        </div>
+        </form>
 
         <div>
           <div className="flex flex-col space-y-3 pt-4">

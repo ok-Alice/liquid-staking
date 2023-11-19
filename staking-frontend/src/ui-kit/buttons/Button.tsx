@@ -4,6 +4,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "sky";
   disabled?: boolean;
   className?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 const variantClasses = {
@@ -24,12 +25,14 @@ const Button: React.FC<ButtonProps> = ({
   variant = "sky", // Default to "sky" variant
   disabled,
   className,
+  type = "button",
 }) => {
   // Determine the class based on variant and disabled state
   const classes = disabled ? disabledClasses[variant] : variantClasses[variant];
 
   return (
     <button
+      type={type}
       disabled={disabled}
       onClick={!disabled ? onClick : undefined} // Prevent onClick if disabled
       className={`px-4 py-3 text-white rounded-2xl ${classes} ${
