@@ -23,17 +23,20 @@ const Claiming: React.FC = () => {
       addNotification({
         title: "Claiming DOT",
         message: "Transaction is pending...",
+        type: "warning",
       });
 
       setTimeout(() => {
         addNotification({
           title: "Claiming DOT",
           message: "Transaction is complete!",
+          type: "success",
         });
 
         addNotification({
           title: "Claimed DOT",
-          message: "DOT has been added to your account!",
+          message: "DOT has been added to your account",
+          type: "info",
         });
 
         resolve();

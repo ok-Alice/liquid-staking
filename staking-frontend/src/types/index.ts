@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export type Validator = {
   address: string;
   identity: ValidatorIdentity;
@@ -31,6 +33,7 @@ export type Notification = {
   message: string;
   duration?: number;
   timeoutId?: NodeJS.Timeout;
+  type: "info" | "success" | "warning" | "error";
 };
 
 export type ChainBalance = {

@@ -41,12 +41,14 @@ const UnStaking: React.FC = () => {
       addNotification({
         title: "Unstaking DOT",
         message: "Transaction is pending...",
+        type: "warning",
       });
 
       setTimeout(() => {
         addNotification({
           title: "Unstaking DOT",
           message: "Transaction is complete!",
+          type: "success",
         });
 
         resolve();

@@ -40,12 +40,14 @@ const Staking: React.FC = () => {
       addNotification({
         title: "Staking DOT",
         message: "Transaction is pending...",
+        type: "warning",
       });
 
       setTimeout(() => {
         addNotification({
           title: "Staking DOT",
           message: "Transaction is complete!",
+          type: "success",
         });
 
         resolve();

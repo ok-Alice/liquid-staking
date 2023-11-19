@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { useNotifications } from "@/hooks";
 import { Notification as NotificationType } from "@/types";
 import CloseIcon from "../icons/close-icon.svg";
@@ -25,8 +24,20 @@ const Notification: React.FC<Props> = ({ notification }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notification.id]);
 
+  // Determine border color based on notification type
+  const borderColor =
+    notification.type === "error"
+      ? "border-error-500"
+      : notification.type === "warning"
+      ? "border-warning-500"
+      : notification.type === "success"
+      ? "border-success-500"
+      : "border-sky-500"; // Default to 'info' type
+
   return (
-    <div className="bg-white p-3 rounded-2xl shadow-md border border-gray-200">
+    <div
+      className={`bg-white p-3 rounded-2xl shadow-md border-2 ${borderColor}`}
+    >
       <div className="flex justify-between items-center">
         <h4 className="text-lg font-semibold">{notification.title}</h4>
         <button

@@ -20,6 +20,7 @@ const AccountListener: React.FC = () => {
       addNotification({
         title: "Claimable DOT",
         message: `You have ${claimableDOT} DOT to claim`,
+        type: "info",
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,6 +31,7 @@ const AccountListener: React.FC = () => {
       addNotification({
         title: "DOT In Flight",
         message: `You have ${DOTInFlight} DOT in flight`,
+        type: "info",
       });
 
       setTimeout(() => {
@@ -42,6 +44,7 @@ const AccountListener: React.FC = () => {
         addNotification({
           title: "DOT In Flight",
           message: `Your ${DOTInFlight} DOT has landed`,
+          type: "info",
         });
       }, 10000);
     }

@@ -6,7 +6,12 @@ import { Notification } from "@/types";
 const useNotifications = () => {
   const [notifications, setNotifications] = useAtom(notificationsAtom);
 
-  const addNotification = ({ title, message, duration }: Notification) => {
+  const addNotification = ({
+    title,
+    message,
+    duration,
+    type,
+  }: Notification) => {
     // Create random id
     const id = Math.random().toString(36).substr(2, 9);
     const newNotification: Notification = {
@@ -14,6 +19,7 @@ const useNotifications = () => {
       message,
       duration: duration ? duration : 5000,
       id,
+      type,
     };
     setNotifications((prev) => [...prev, newNotification]);
   };
