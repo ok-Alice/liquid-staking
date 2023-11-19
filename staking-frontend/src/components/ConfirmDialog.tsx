@@ -1,15 +1,17 @@
 import Modal from "@/ui-kit/Modal";
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 
 interface Props {
   title: string;
   message: string;
+  extraMessage?: string | ReactElement;
   onCancel: () => void;
   onConfirm: () => Promise<void>;
 }
 const ConfirmDialog: React.FC<Props> = ({
   title,
   message,
+  extraMessage,
   onCancel,
   onConfirm,
 }) => {
@@ -32,7 +34,8 @@ const ConfirmDialog: React.FC<Props> = ({
       size="sm"
       isLoading={isLoading}
     >
-      Are you sure you want to {message}?
+      <p>Are you sure you want to {message}?</p>
+      {extraMessage ? <p>{extraMessage}</p> : null}
     </Modal>
   );
 };

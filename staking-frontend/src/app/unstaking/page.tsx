@@ -13,8 +13,8 @@ const UnstakingPage = () => {
             Unstake using your LDOT and receive DOT based on the current
             exchange rate
             <br />
-            DOT you receive by unstaking with LDOT will become claimable after a
-            while.
+            DOT you receive by unstaking with LDOT will become claimable after 7
+            days
           </>
         }
       />

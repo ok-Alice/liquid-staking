@@ -51,7 +51,7 @@ const Staking: React.FC = () => {
         resolve();
         setBalance((prev) => ({
           ...prev,
-          availableDOT: availableDOT - Number(stakeAmount),
+          availableDOT: prev.availableDOT - Number(stakeAmount),
           availableLDOT: prev.availableLDOT + Number(liquidBalancetoReceive),
         }));
         setShowConfirmStake(false);
