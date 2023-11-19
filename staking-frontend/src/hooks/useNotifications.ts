@@ -26,8 +26,6 @@ const useNotifications = () => {
     );
   };
 
-  console.log(notifications);
-
   return { notifications, addNotification, removeNotification };
 };
 

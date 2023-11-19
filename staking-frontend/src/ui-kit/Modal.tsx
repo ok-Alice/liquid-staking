@@ -1,16 +1,39 @@
 import React from "react";
 import { Dialog } from "@headlessui/react";
 import { Button } from "./buttons";
-import CloseIcon from "./icons/close-icon.svg";
+import Spinner from "./Spinner";
 
 interface ModalProps {
   title: string;
   isOpen: boolean;
+  closeMessage?: string;
   onClose: () => void;
+  onCancel?: () => void;
   children: React.ReactNode;
+  size?: "sm" | "md" | "lg";
+  isLoading?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ title, isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  title,
+  isOpen,
+  closeMessage = "Close",
+  onClose,
+  onCancel,
+  children,
+  size = "md",
+  isLoading = false,
+}) => {
+  const getSizeClass = (size: string) => {
+    switch (size) {
+      case "sm":
+        return "w-auto";
+      case "lg":
+        return "w-[90%] sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3";
+      default: // md
+        return "w-[90%] sm:w-3/4 md:w-2/3 lg:w-[40%] xl:w-1/4";
+    }
+  };
   return (
     <Dialog
       open={isOpen}
@@ -20,20 +43,44 @@ const Modal: React.FC<ModalProps> = ({ title, isOpen, onClose, children }) => {
       <div className="flex items-start justify-center min-h-screen">
         <Dialog.Overlay className="fixed inset-0 bg-gray-800 bg-opacity-50" />
 
-        <div className="relative p-6 bg-white mx-auto mt-20 rounded-2xl w-1/3 flex-shrink-0">
-          <Dialog.Title className="text-2xl font-semibold">
+        <div
+          className={`relative bg-white mx-auto mt-20 rounded-2xl ${getSizeClass(
+            size
+          )} flex-shrink-0`}
+        >
+          <Dialog.Title className="text-2xl font-semibold p-4">
             {title}
           </Dialog.Title>
-          <button onClick={onClose} className="absolute top-0 right-0 p-4">
-            <CloseIcon className="h-8 w-8" />
-          </button>
 
-          <div className="mt-4 text-gray-800">{children}</div>
+          <div className="border-b-[2px]" />
 
-          <div className="flex justify-end mt-4">
-            <Button onClick={onClose} variant="primary">
-              Close
-            </Button>
+          <div className="p-6">
+            <div className="text-gray-800">{children}</div>
+          </div>
+
+          <div className="border-b-[2px]" />
+
+          <div className="p-4">
+            <div className="flex justify-end gap-2">
+              {!!onCancel && (
+                <Button
+                  onClick={onCancel}
+                  variant="secondary"
+                  disabled={isLoading}
+                >
+                  Cancel
+                </Button>
+              )}
+              <Button
+                onClick={onClose}
+                disabled={isLoading}
+                variant="primary"
+                className="flex justify-between align-center gap-3"
+              >
+                <span>{closeMessage}</span>
+                {isLoading && <Spinner color="white" />}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

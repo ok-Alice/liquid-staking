@@ -36,9 +36,7 @@ const UnStaking: React.FC = () => {
 
   const DOTToRecieve = useMemo(
     () =>
-      unstakeAmount && !overLimit
-        ? Number(unstakeAmount) * Number(exchangeRate)
-        : "--",
+      unstakeAmount && !overLimit ? Number(unstakeAmount) * exchangeRate : "--",
     [unstakeAmount, exchangeRate, overLimit]
   );
 
@@ -84,7 +82,7 @@ const UnStaking: React.FC = () => {
               onClick={handleStake}
               disabled={overLimit || unstakeAmount === ""}
             >
-              Stake
+              Unstake
             </Button>
           ) : (
             <ConnectWallet />
@@ -94,7 +92,12 @@ const UnStaking: React.FC = () => {
         <div>
           <div className="flex flex-col space-y-3 pt-4">
             <div className="flex justify-between">
-              <strong>You will receive</strong> {DOTToRecieve} DOT
+              <strong>Exchange rate:</strong>
+              <span>1:{exchangeRate}</span>
+            </div>
+            <div className="flex justify-between">
+              <strong>You will receive:</strong>
+              <span>{DOTToRecieve} DOT</span>
             </div>
           </div>
         </div>

@@ -8,7 +8,15 @@ const UnstakingPage = () => {
     <>
       <PageTitle
         title="Unstaking"
-        subtitle="Unstake your LDOT and claim available DOT when available"
+        subtitle={
+          <>
+            Unstake using your LDOT and receive DOT based on the current
+            exchange rate
+            <br />
+            DOT you receive by unstaking with LDOT will become claimable after a
+            while.
+          </>
+        }
       />
       <TabGroup
         tabs={[

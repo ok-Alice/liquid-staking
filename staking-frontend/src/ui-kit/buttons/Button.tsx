@@ -3,6 +3,7 @@ interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   variant?: "primary" | "secondary" | "sky";
   disabled?: boolean;
+  className?: string;
 }
 
 const variantClasses = {
@@ -12,9 +13,9 @@ const variantClasses = {
 };
 
 const disabledClasses = {
-  primary: "bg-primary-900/20 cursor-not-allowed opacity-50",
-  secondary: "bg-secondary-900/20 cursor-not-allowed",
-  sky: "bg-sky-900/20 cursor-not-allowed",
+  primary: "bg-primary-500 cursor-not-allowed",
+  secondary: "bg-secondary-500 cursor-not-allowed",
+  sky: "bg-sky-500 cursor-not-allowed",
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   variant = "sky", // Default to "sky" variant
   disabled,
+  className,
 }) => {
   // Determine the class based on variant and disabled state
   const classes = disabled ? disabledClasses[variant] : variantClasses[variant];
@@ -30,7 +32,9 @@ const Button: React.FC<ButtonProps> = ({
     <button
       disabled={disabled}
       onClick={!disabled ? onClick : undefined} // Prevent onClick if disabled
-      className={`px-4 py-3 text-white rounded-2xl ${classes}`}
+      className={`px-4 py-3 text-white rounded-2xl ${classes} ${
+        className ? className : ""
+      }`}
     >
       {children}
     </button>

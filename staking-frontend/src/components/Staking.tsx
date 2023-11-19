@@ -3,20 +3,24 @@ import React, { useMemo, useState } from "react";
 import { useWallet } from "useink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 
 import Card from "@/ui-kit/Card";
 import { Button } from "@/ui-kit/buttons";
 import { chainBalanceAtom, exchangeRatesAtom } from "@/store";
+import { useNotifications } from "@/hooks";
 import ConnectWallet from "./ConnectWallet";
+import ConfirmDialog from "./ConfirmDialog";
 
 const Staking: React.FC = () => {
   const { account } = useWallet();
+  const { addNotification } = useNotifications();
   const [overLimit, setOverLimit] = useState(false);
-
   const [stakeAmount, setStakeAmount] = useState<string>("");
+  const [showConfirmStake, setShowConfirmStake] = useState(false);
 
-  const { availableDOT } = useAtomValue(chainBalanceAtom);
+  const { availableDOT, availableLDOT } = useAtomValue(chainBalanceAtom);
+  const setBalance = useSetAtom(chainBalanceAtom);
   const { DOTToLDOTExchangeRate: exchangeRate } =
     useAtomValue(exchangeRatesAtom);
 
@@ -26,13 +30,33 @@ const Staking: React.FC = () => {
 
     if (valid) {
       // convert to number and check if its over the limit
-      setOverLimit(Number(value) > Number(availableDOT));
+      setOverLimit(Number(value) > availableDOT);
       setStakeAmount(value);
     }
   };
 
-  const handleStake = async () => {
-    // Your stake logic here
+  const handleStake = (): Promise<void> => {
+    return new Promise<void>((resolve) => {
+      addNotification({
+        title: "Staking DOT",
+        message: "Transaction is pending...",
+      });
+
+      setTimeout(() => {
+        addNotification({
+          title: "Staking DOT",
+          message: "Transaction is complete!",
+        });
+
+        resolve();
+        setBalance((prev) => ({
+          ...prev,
+          availableDOT: availableDOT - Number(stakeAmount),
+          availableLDOT: prev.availableLDOT + Number(liquidBalancetoReceive),
+        }));
+        setShowConfirmStake(false);
+      }, 5000);
+    });
   };
 
   const liquidBalancetoReceive = useMemo(
@@ -54,10 +78,8 @@ const Staking: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="font-semibold mb-2 text-center">
-              Current Exchange Rate
-            </h2>
-            1:{exchangeRate}
+            <h2 className="font-semibold mb-2 text-center">Available LDOT</h2>
+            {account ? availableLDOT : "--"}
           </div>
         </div>
       </Card>
@@ -81,7 +103,10 @@ const Staking: React.FC = () => {
             Entered amount exceeds available DOT
           </span>
           {account ? (
-            <Button onClick={handleStake} disabled={overLimit || !stakeAmount}>
+            <Button
+              onClick={() => setShowConfirmStake(true)}
+              disabled={overLimit || !stakeAmount}
+            >
               Stake
             </Button>
           ) : (
@@ -92,11 +117,25 @@ const Staking: React.FC = () => {
         <div>
           <div className="flex flex-col space-y-3 pt-4">
             <div className="flex justify-between">
-              <strong>You will receive</strong> {liquidBalancetoReceive} LDOT
+              <strong>Exchange Rate:</strong>
+              <span>1:{exchangeRate}</span>
+            </div>
+            <div className="flex justify-between">
+              <strong>You will receive:</strong>
+              <span>{liquidBalancetoReceive} LDOT</span>
             </div>
           </div>
         </div>
       </Card>
+
+      {showConfirmStake && (
+        <ConfirmDialog
+          title="Confirm Staking DOT"
+          message={`stake ${stakeAmount} DOT`}
+          onCancel={() => setShowConfirmStake(false)}
+          onConfirm={handleStake}
+        />
+      )}
     </div>
   );
 };
