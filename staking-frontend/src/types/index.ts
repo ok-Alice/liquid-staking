@@ -30,6 +30,7 @@ export type Notification = {
   title: string;
   message: string;
   duration?: number;
+  timeoutId?: NodeJS.Timeout;
 };
 
 export type ChainBalance = {

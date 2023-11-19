@@ -6,27 +6,29 @@ import { Notification } from "@/types";
 const useNotifications = () => {
   const [notifications, setNotifications] = useAtom(notificationsAtom);
 
-  const addNotification = ({ id, title, message, duration }: Notification) => {
-    // if there is already a notification with the same id, don't add it
-    if (id && notifications.find((notification) => notification.id === id))
-      return;
-
+  const addNotification = ({ title, message, duration }: Notification) => {
+    // Create random id
+    const id = Math.random().toString(36).substr(2, 9);
     const newNotification: Notification = {
       title,
       message,
-      duration,
-      id: id ? id : Date.now().toString(),
+      duration: duration ? duration : 5000,
+      id,
     };
     setNotifications((prev) => [...prev, newNotification]);
   };
 
   const removeNotification = (id: string) => {
-    setNotifications(
-      notifications.filter((notification) => notification.id !== id)
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
     );
   };
 
-  return { notifications, addNotification, removeNotification };
+  return {
+    notifications,
+    addNotification,
+    removeNotification,
+  };
 };
 
 export default useNotifications;

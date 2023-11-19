@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import { useNotifications } from "@/hooks";
 import { Notification as NotificationType } from "@/types";
-
 import CloseIcon from "../icons/close-icon.svg";
 
 interface Props {
@@ -13,13 +12,18 @@ const Notification: React.FC<Props> = ({ notification }) => {
   const { removeNotification } = useNotifications();
 
   useEffect(() => {
+    let timer;
     if (notification.duration) {
-      const timer = setTimeout(() => {
+      timer = setTimeout(() => {
         removeNotification(notification.id as string);
       }, notification.duration);
-      return () => clearTimeout(timer);
     }
-  }, [notification, removeNotification]);
+
+    return () => {
+      clearTimeout(notification.timeoutId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [notification.id]);
 
   return (
     <div className="bg-white p-3 rounded-2xl shadow-md border border-gray-200">
